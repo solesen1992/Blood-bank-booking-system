@@ -3,6 +3,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Register services with the dependency injection container
+builder.Services.AddSingleton<IDonorService, DonorService>(); // Register DonorService as a singleton
+builder.Services.AddSingleton<IDonorBusinessLogic, DonorBusinessLogic>();
+builder.Services.AddSingleton<IAppointmentService, AppointmentService>();
+builder.Services.AddSingleton<IAppointmentBusinessLogic, AppointmentBusinessLogic>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
