@@ -6,21 +6,24 @@ namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        //ILogger<HomeController> logs errors specific for HomeController
         private readonly ILogger<HomeController> _logger;
 
+        // Constructor to inject logger
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        // Index action returns an empty view
         public IActionResult Index()
         {
-            return View();
+            return View(); // View - Front page
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return View(); // Returns a HTML-page with Razor view
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

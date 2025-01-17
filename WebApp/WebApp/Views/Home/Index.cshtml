@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<MVC_Webserver.Models.Donor>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    @{
+    ViewData["Title"] = "Home Page";
+    }
+
+    <div class="row">
+        <!-- First column-->
+        <div class="col-md-6 col-sm-6 text-center">
+            <h4>Vi har også brug for hverdagshelte</h4>
+            <h1 class="display-4">Velkommen til blodbanken</h1>
+            </br>
+            <p>
+                Velkommen til DonerBlod.Nu! Har du lyst til at gøre en forskel for andre?
+                Hver dag har patienter brug for blodtransfusioner på grund af sygdomme, operationer og ulykker - og du kan være med til at gøre en forskel.
+            </p>
+            <div class="text-center my-4 d-flex flex-column align-items-center">
+                <a href="@Url.Action("Create", "Donor")" class="btn btn-primary btn-lg mb-2">
+                    Registrer dig som donor i dag
+                </a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">
+                    Er du allerede donor? Log ind
+                </a>
+            </div>
+        </div>
+
+        <!-- Second column-->
+        <div class="col-md-6 col-sm-6">
+            <img src="~/img/DonerBlodNuCover.jpg" alt="Bloddonor" class="centered-image" />
+        </div>
+    </div>
+
