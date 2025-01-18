@@ -20,3 +20,4 @@
         public DateTime EndTime { get; set; }
         public int FK_donorId { get; set; }
     }
+}
