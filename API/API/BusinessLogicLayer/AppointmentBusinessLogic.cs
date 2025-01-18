@@ -1,6 +1,7 @@
 ﻿namespace API.BusinessLogicLayer
 {
-    public class AppointmentBusinessLogic
+    public class AppointmentBusinessLogic : IAppointmentLogic
     {
+
     }
 }
