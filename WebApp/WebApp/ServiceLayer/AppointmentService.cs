@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using WebApp.Models;
+using Newtonsoft.Json;
 
 namespace WebApp.ServiceLayer
 {
@@ -15,7 +16,7 @@ namespace WebApp.ServiceLayer
     /// - Retrieves the API base URL from configuration (e.g., appsettings.json) via dependency injection 
     /// using the <see cref="IConfiguration"/> interface.
     /// </remarks>
-    public class AppointmentServicee : IAppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private readonly string apiUrl;
 
