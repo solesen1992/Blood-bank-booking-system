@@ -1,6 +1,8 @@
 ﻿namespace WebApp.ServiceLayer
 {
-    public class DonorService
+    
+    public class DonorService : IDonorService
     {
+
     }
 }
