@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model WebApp.Models.Appointment
+
 @{
+    ViewData["Title"] = "Bekræftelse";
+}
+
+<!-- Display the page title -->
+<h1>@ViewData["Title"]</h1>
+<!-- Display a success message if ViewBag.SuccessMessage is not null -->
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<!-- Display error message if there was an issue (e.g., appointment time was taken) -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
