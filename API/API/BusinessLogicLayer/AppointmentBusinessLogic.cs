@@ -2,33 +2,34 @@
 
 namespace API.BusinessLogicLayer
 {
-    /// <summary>
-    /// The <c>AppointmentLogic</c> class provides the business logic for managing appointments 
-    /// and interacting with donors. It acts as an intermediary between the database access layer and the controller layer.
-    /// 
-    /// Key responsibilities include fetching appointment data along with donor details using data access interfaces, 
-    /// mapping database entities to Data Transfer Objects (DTOs) for use in the application, and validating and inserting 
-    /// new appointment data into the database.
-    /// 
-    /// The class depends on <c>IAppointmentAccess</c> for handling database operations 
-    /// for appointments and <c>IDonorAccess</c> for providing access to donor-related data. Key methods include <c>GetAppointments</c>, 
-    /// which retrieves a list of appointments and their associated donor data, converting them into DTOs for external use, and 
-    /// 
-    /// <c>InsertAppointment</c>, which validates and adds a new appointment to the database using data provided as a <c>CreateAppointmentDTO</c>. 
-    /// This class relies on model conversion utilities to map between database entities and DTOs, ensuring clean separation of concerns.
-    /// </summary>
+    /**
+     * The `AppointmentLogic` class provides the business logic for managing appointments 
+     * and interacting with donors. It acts as an intermediary between the database access layer and the controller layer.
+     * 
+     * Key responsibilities include fetching appointment data along with donor details using data access interfaces, 
+     * mapping database entities to Data Transfer Objects (DTOs) for use in the application, and validating and inserting 
+     * new appointment data into the database.
+     * 
+     * The class depends on `IAppointmentAccess` for handling database operations 
+     * for appointments and `IDonorAccess` for providing access to donor-related data. Key methods include `GetAppointments`, 
+     * which retrieves a list of appointments and their associated donor data, converting them into DTOs for external use, and 
+     * 
+     * `InsertAppointment`, which validates and adds a new appointment to the database using data provided as a `CreateAppointmentDTO`. 
+     * This class relies on model conversion utilities to map between database entities and DTOs, ensuring clean separation of concerns.
+     */
     public class AppointmentBusinessLogic : IAppointmentBusinessLogic
     {
         private IAppointmentAccess _appointmentAccess;
         private IDonorAccess _donorAccess;
 
-        /// <summary>
-        /// Initializes a new instance of the <c>AppointmentLogic</c> class.
-        /// Ensures the required dependency (<c>IAppointmentAccess</c>) is provided, and optionally accepts <c>IDonorAccess</c>.
-        /// </summary>
-        /// <param name="appointmentAccess">The appointment access layer.</param>
-        /// <param name="donorAccess">The donor access layer (optional).</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="appointmentAccess"/> is null.</exception>
+        /**
+         * Initializes a new instance of the `AppointmentLogic` class.
+         * Ensures the required dependency (`IAppointmentAccess`) is provided, and optionally accepts `IDonorAccess`.
+         * 
+         * @param appointmentAccess The appointment access layer.
+         * @param donorAccess The donor access layer (optional).
+         * @throws ArgumentNullException Thrown when `appointmentAccess` is null.
+         */
         public AppointmentLogic(IAppointmentAccess appointmentAccess, IDonorAccess donorAccess = null)
         {
             if (appointmentAccess == null)
@@ -40,27 +41,29 @@ namespace API.BusinessLogicLayer
             _donorAccess = donorAccess;
         }
 
-        /// <summary>
-        /// Retrieves all appointments along with their associated donor details.
-        /// </summary>
-        /// <returns>A list of <c>Appointment</c> objects containing appointment and donor information.</returns> 
+        /**
+         * Retrieves all appointments along with their associated donor details.
+         * 
+         * @return A list of `Appointment` objects containing appointment and donor information.
+         */
         public List<Appointment> GetAppointments()
         {
             // Fetch the appointments along with the associated donor data
             var appointments = _appointmentAccess.GetAppointments();
 
-            // Fetch the list of donors (e.g., from the database or a repository)
+            // Fetch the list of donors from the database
             var donors = _donorAccess.GetDonorsWithBloodTypeAndCity();
 
             return appointments;
         }
 
-        /// <summary>
-        /// Retrieves a specific appointment by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the appointment to be retrieved.</param>
-        /// <returns>The <c>Appointment</c> object if found, otherwise null.</returns>
-        /// <exception cref="ArgumentException">Thrown when the <paramref name="id"/> is invalid.</exception>
+        /**
+         * Retrieves a specific appointment by its ID.
+         * 
+         * @param id The ID of the appointment to be retrieved.
+         * @return The `Appointment` object if found, otherwise null.
+         * @throws ArgumentException Thrown when the `id` is invalid.
+         */
         public Appointment GetAppointmentById(int id)
         {
             if (id <= 0)
@@ -68,7 +71,7 @@ namespace API.BusinessLogicLayer
                 throw new ArgumentException("Invalid appointment ID.");
             }
 
-            // Fetch the appointment from the database using the data access layer
+            // Fetch the appointment from the database
             var appointment = _appointmentAccess.GetAppointmentById(id);
 
             // Return the appointment if found, otherwise return null
@@ -76,14 +79,15 @@ namespace API.BusinessLogicLayer
         }
 
 
-        /// <summary>
-        /// Inserts a new appointment into the database.
-        /// </summary>
-        /// <param name="appointment">The appointment object to insert.</param>
-        /// <param name="donorId">The ID of the donor associated with the appointment.</param>
-        /// <returns><c>true</c> if the appointment was successfully inserted; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="appointment"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="donorId"/> is invalid.</exception>
+        /**
+         * Inserts a new appointment into the database.
+         * 
+         * @param appointment The appointment object to insert.
+         * @param donorId The ID of the donor associated with the appointment.
+         * @return `true` if the appointment was successfully inserted; otherwise, `false`.
+         * @throws ArgumentNullException Thrown when `appointment` is null.
+         * @throws ArgumentException Thrown when `donorId` is invalid.
+         */
         public bool InsertAppointment(Appointment appointment, int donorId)
         {
             if (appointment == null)
@@ -107,13 +111,14 @@ namespace API.BusinessLogicLayer
             return _appointmentAccess.InsertAppointment(appointment, donorId);
         }
 
-        /// <summary>
-        /// Deletes an appointment from the database.
-        /// </summary>
-        /// <param name="appointment">The appointment object to delete.</param>
-        /// <returns><c>true</c> if the appointment was successfully deleted; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="appointment"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when the <paramref name="appointment"/> ID is invalid.</exception>
+        /**
+         * Deletes an appointment from the database.
+         * 
+         * @param appointment The appointment object to delete.
+         * @return `true` if the appointment was successfully deleted; otherwise, `false`.
+         * @throws ArgumentNullException Thrown when `appointment` is null.
+         * @throws ArgumentException Thrown when the `appointment` ID is invalid.
+         */
         public bool DeleteAppointment(Appointment appointment)
         {
             if (appointment == null)
@@ -130,12 +135,13 @@ namespace API.BusinessLogicLayer
             return _appointmentAccess.DeleteAppointment(appointment);
         }
 
-        /// <summary>
-        /// Retrieves a list of appointments for a specific donor.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor for whom appointments are to be retrieved.</param>
-        /// <returns>A list of <c>Appointment</c> objects associated with the donor.</returns>
-        /// <exception cref="ArgumentException">Thrown when the <paramref name="donorId"/> is invalid.</exception>
+        /**
+         * Retrieves a list of appointments for a specific donor.
+         * 
+         * @param donorId The ID of the donor for whom appointments are to be retrieved.
+         * @return A list of `Appointment` objects associated with the donor.
+         * @throws ArgumentException Thrown when the `donorId` is invalid.
+         */
         public List<Appointment> GetAppointmentsByDonorId(int donorId)
         {
             // Validate the donor ID
@@ -144,19 +150,20 @@ namespace API.BusinessLogicLayer
                 throw new ArgumentException("Invalid donor ID.");
             }
 
-            // Fetch the appointments for the donor from the database using the data access layer
+            // Fetch the appointments for the donor from the database
             var appointments = _appointmentAccess.GetAppointmentsByDonorId(donorId);
 
             // Return the appointments if found, otherwise return an empty list
             return appointments ?? new List<Appointment>();
         }
 
-        /// <summary>
-        /// Deletes an appointment from the database based on the appointment start time.
-        /// </summary>
-        /// <param name="startTime">The start time of the appointment to be deleted.</param>
-        /// <returns><c>true</c> if the appointment was successfully deleted; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="startTime"/> is null.</exception>
+        /**
+         * Deletes an appointment from the database based on the appointment start time.
+         * 
+         * @param startTime The start time of the appointment to be deleted.
+         * @return `true` if the appointment was successfully deleted; otherwise, `false`.
+         * @throws ArgumentNullException Thrown when `startTime` is null.
+         */
         public bool DeleteAppointmentByStartTime(DateTime startTime)
         {
             // Validate the start time
