@@ -1,21 +1,24 @@
 ﻿namespace API.DatabaseLayer
 {
-    /// <summary>
-    /// The DonorAccess class in the DatabaseLayer provides methods to interact with the database for 
-    /// donor-related operations.
-    /// 
-    /// The class uses Dapper for querying and manipulating the SQL database and retrieves or modifies 
-    /// information from multiple tables such as Donor, BloodType, and CityZipCode. It also handles 
-    /// the insertion or getting of the CityZipCode based on donor details.
-    /// </summary>
+    /**
+     * The DonorAccess class in the DatabaseLayer provides methods to interact with the database for 
+     * donor-related operations.
+     * 
+     * The class uses Dapper for querying and manipulating the SQL database and retrieves or modifies 
+     * information from multiple tables such as Donor, BloodType, and CityZipCode. It also handles 
+     * the insertion or getting of the CityZipCode based on donor details.
+     */
     public class DonorAccess : IDonorAccess
     {
-        /// <summary>
-        /// Constructor to initialize the DonorAccess class with a configuration object.
-        /// It retrieves the connection string from the configuration file.
-        /// Throws an exception if the connection string is not found.
-        /// </summary>
-        /// <param name="configuration">The configuration object to retrieve the connection string.</param>
+        public string? ConnectionString { get; set; }
+
+        /**
+         * Constructor to initialize the DonorAccess class with a configuration object.
+         * It retrieves the connection string from the configuration file.
+         * Throws an exception if the connection string is not found.
+         * 
+         * @param configuration The configuration object to retrieve the connection string.
+         */
         public DonorAccess(IConfiguration configuration)
         {
             //Access the connection string
@@ -26,15 +29,13 @@
             }
         }
 
-
-        public string? ConnectionString { get; set; }
-
-        /// <summary>
-        /// Retrieves a list of donors along with their associated blood type and city information.
-        /// This method executes a SQL query that joins the Donor, BloodType, and CityZipCode tables
-        /// to gather comprehensive donor details.
-        /// </summary>
-        /// <returns>A list of <see cref="Donor"/> objects, each containing donor information, blood type, and city details.</returns>
+        /**
+         * Retrieves a list of donors along with their associated blood type and city information.
+         * This method executes a SQL query that joins the Donor, BloodType, and CityZipCode tables
+         * to gather comprehensive donor details.
+         * 
+         * @return A list of Donor objects, each containing donor information, blood type, and city details.
+         */
         public List<Donor> GetDonorsWithBloodTypeAndCity()
         {
             // Initialize a list to hold the donor objects
@@ -76,12 +77,13 @@
             }
         }
 
-        /// <summary>
-        /// Converts the data from a <see cref="SqlDataReader"/> into a list of <see cref="Donor"/> objects.
-        /// This method reads through each row of the SQL query results and populates a <see cref="Donor"/> object accordingly.
-        /// </summary>
-        /// <param name="reader">The <see cref="SqlDataReader"/> containing the donor data from the database.</param>
-        /// <returns>A list of <see cref="Donor"/> objects populated with data from the <see cref="SqlDataReader"/>.</returns>
+        /**
+         * Converts the data from a SqlDataReader into a list of Donor objects.
+         * This method reads through each row of the SQL query results and populates a Donor object accordingly.
+         * 
+         * @param reader The SqlDataReader containing the donor data from the database.
+         * @return A list of Donor objects populated with data from the SqlDataReader.
+         */
         public List<Donor> GetDonorObjects(SqlDataReader reader)
         {
             // Initialize a list to hold the donor objects
@@ -121,12 +123,13 @@
             return donors;
         }
 
-        /// <summary>
-        /// Retrieves a donor by their CPR number.
-        /// This method checks if the CPR number exists in the database and returns the corresponding donor information.
-        /// </summary>
-        /// <param name="cprNo">The CPR number of the donor to retrieve.</param>
-        /// <returns>The <see cref="Donor"/> object corresponding to the provided CPR number, or null if no donor is found.</returns>
+        /**
+         * Retrieves a donor by their CPR number.
+         * This method checks if the CPR number exists in the database and returns the corresponding donor information.
+         * 
+         * @param cprNo The CPR number of the donor to retrieve.
+         * @return The Donor object corresponding to the provided CPR number, or null if no donor is found.
+         */
         public Donor GetDonorByCprNo(string cprNo)
         {
             // Initialize a new Donor object
@@ -174,12 +177,13 @@
             }
         }
 
-        /// <summary>
-        /// Retrieves a donor by their ID.
-        /// This method checks if the donor ID exists in the database and returns the corresponding donor information.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor to retrieve.</param>
-        /// <returns>The <see cref="Donor"/> object corresponding to the provided ID, or null if no donor is found.</returns>
+        /**
+         * Retrieves a donor by their ID.
+         * This method checks if the donor ID exists in the database and returns the corresponding donor information.
+         * 
+         * @param donorId The ID of the donor to retrieve.
+         * @return The Donor object corresponding to the provided ID, or null if no donor is found.
+         */
         public Donor GetDonorById(int donorId)
         {
             // Initialize a new Donor object
@@ -226,13 +230,14 @@
             }
         }
 
-        /// <summary>
-        /// Checks whether a city and its corresponding zip code already exist in the CityZipCode table.
-        /// If they do, it retrieves the CityZipCodeId. If they do not exist, it inserts a new record for the city and zip code
-        /// and returns the newly inserted CityZipCodeId.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object containing the city and zip code information.</param>
-        /// <returns>The CityZipCodeId if found or newly inserted; otherwise, null.</returns>
+        /**
+         * Checks whether a city and its corresponding zip code already exist in the CityZipCode table.
+         * If they do, it retrieves the CityZipCodeId. If they do not exist, it inserts a new record for the city and zip code
+         * and returns the newly inserted CityZipCodeId.
+         * 
+         * @param donor The Donor object containing the city and zip code information.
+         * @return The CityZipCodeId if found or newly inserted; otherwise, null.
+         */
         public int? InsertOrGetExistingCityZipCode(Donor donor)
         {
             // Nullable integer variable to hold the CityZipCodeId (can be null if not found or inserted)
@@ -272,13 +277,14 @@
             return donorsCityZipCodeId;
         }
 
-        /// <summary>
-        /// Inserts a new donor into the database.
-        /// This method first checks for a valid donor object, retrieves or inserts the CityZipCode,
-        /// and then inserts the donor’s information into the Donor table.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object containing the donor's information.</param>
-        /// <returns>True if the donor was successfully inserted; otherwise, false.</returns>
+        /**
+         * Inserts a new donor into the database.
+         * This method first checks for a valid donor object, retrieves or inserts the CityZipCode,
+         * and then inserts the donor’s information into the Donor table.
+         * 
+         * @param donor The Donor object containing the donor's information.
+         * @return True if the donor was successfully inserted; otherwise, false.
+         */
         public bool InsertDonor(Donor donor)
         {
             if (donor == null)
@@ -330,12 +336,13 @@
             return created;
         }
 
-        /// <summary>
-        /// Checks if a CPR number exists in the Donor table.
-        /// This method queries the database to determine if the provided CPR number is already associated with an existing donor.
-        /// </summary>
-        /// <param name="cprNo">The CPR number to check.</param>
-        /// <returns>True if the CPR number exists; otherwise, false.</returns>
+        /**
+         * Checks if a CPR number exists in the Donor table.
+         * This method queries the database to determine if the provided CPR number is already associated with an existing donor.
+         * 
+         * @param cprNo The CPR number to check.
+         * @return True if the CPR number exists; otherwise, false.
+         */
         public bool DoesCprNoExist(string cprNo)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -357,12 +364,14 @@
                 }
             }
         }
-        /// <summary>
-        /// Updates the information of an existing donor in the database.
-        /// This method modifies the donor's details based on the provided <see cref="Donor"/> object.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object containing the updated donor information.</param>
-        /// <returns>The updated <see cref="Donor"/> object if the update was successful; otherwise, null.</returns>
+
+        /**
+         * Updates the information of an existing donor in the database.
+         * This method modifies the donor's details based on the provided Donor object.
+         * 
+         * @param donor The Donor object containing the updated donor information.
+         * @return The updated Donor object if the update was successful; otherwise, null.
+         */
         public Donor UpdateDonor(Donor donor)
         {
             // Check if the donor object is not null
@@ -435,12 +444,13 @@
             return donor;
         }
 
-        /// <summary>
-        /// Deletes an existing donor from the database.
-        /// This method removes the donor's record based on the provided <see cref="Donor"/> object.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object representing the donor to be deleted.</param>
-        /// <returns>True if the donor was successfully deleted; otherwise, false.</returns>
+        /**
+         * Deletes an existing donor from the database.
+         * This method removes the donor's record based on the provided Donor object.
+         * 
+         * @param donor The Donor object representing the donor to be deleted.
+         * @return True if the donor was successfully deleted; otherwise, false.
+         */
         public bool DeleteDonor(Donor donor)
         {
             // Declare a variable to track whether the donor was deleted
