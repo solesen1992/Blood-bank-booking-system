@@ -1,9 +1,9 @@
 ﻿namespace API.DatabaseLayer
 {
-    /// <summary>
-    /// This interface defines the operations for managing appointment data within the database.
-    /// It includes methods for retrieving, inserting, updating, and deleting appointments.
-    /// </summary>
+    /**
+     * This interface defines the operations for managing appointment data within the database.
+     * It includes methods for retrieving, inserting, updating, and deleting appointments.
+     */
     public interface IAppointmentAccess
     {
         public List<Appointment> GetAppointments();
