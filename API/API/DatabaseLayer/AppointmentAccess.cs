@@ -1,25 +1,26 @@
 ﻿namespace API.DatabaseLayer
 {
-    /// <summary>
-    /// The <c>AppointmentAccess</c> class interacts with the database to manage appointment data.
-    /// It includes methods to fetch, insert, update, and delete appointments from the database.
-    /// The class uses Dapper for SQL query execution and manages database connections through <c>SqlConnection</c>.
-    /// This class implements the <c>IAppointmentAccess</c> interface.
-    /// </summary>
+    /**
+     * The AppointmentAccess class interacts with the database to manage appointment data.
+     * It includes methods to fetch, insert, update, and delete appointments from the database.
+     * The class uses Dapper for SQL query execution and manages database connections through SqlConnection.
+     * This class implements the IAppointmentAccess interface.
+     */
     public class AppointmentAccess : IAppointmentAccess
     {
-        /// <summary>
-        /// Gets the connection string.
-        /// </summary>
+        /**
+         * Gets the connection string.
+         */
         public string? ConnectionString { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <c>AppointmentAccess</c> class.
-        /// It retrieves the connection string from the application configuration file and throws an exception
-        /// if the connection string is not found.
-        /// </summary>
-        /// <param name="configuration">The application configuration.</param>
-        /// <exception cref="Exception">Thrown when the connection string is not set.</exception>
+        /**
+         * Initializes a new instance of the AppointmentAccess class.
+         * It retrieves the connection string from the application configuration file and throws an exception
+         * if the connection string is not found.
+         * 
+         * @param configuration The application configuration.
+         * @throws Exception Thrown when the connection string is not set.
+         */
         public AppointmentAccess(IConfiguration configuration)
         {
             // Access the connection string from the configuration
@@ -32,11 +33,12 @@
             }
         }
 
-        /// <summary>
-        /// Gets all appointments from the database.
-        /// </summary>
-        /// <returns>A list of <c>Appointment</c> objects.</returns>
-        /// <exception cref="Exception">Thrown when a database error occurs while fetching appointments.</exception>
+        /**
+         * Gets all appointments from the database.
+         * 
+         * @return A list of Appointment objects.
+         * @throws Exception Thrown when a database error occurs while fetching appointments.
+         */
         public List<Appointment> GetAppointments()
         {
             // List to hold the fetched appointments
@@ -98,13 +100,14 @@
             return appointments;
         }
 
-        /// <summary>
-        /// Gets a specific appointment by its ID from the database.
-        /// </summary>
-        /// <param name="id">The appointment ID.</param>
-        /// <returns>An <c>Appointment</c> object or null if not found.</returns>
-        /// <exception cref="ArgumentException">Thrown when the appointment ID is invalid.</exception>
-        /// <exception cref="Exception">Thrown when a database error occurs while fetching the appointment.</exception>
+        /**
+         * Gets a specific appointment by its ID from the database.
+         * 
+         * @param id The appointment ID.
+         * @return An Appointment object or null if not found.
+         * @throws ArgumentException Thrown when the appointment ID is invalid.
+         * @throws Exception Thrown when a database error occurs while fetching the appointment.
+         */
         public Appointment GetAppointmentById(int id)
         {
             if (id <= 0)
@@ -151,14 +154,15 @@
         }
 
 
-        /// <summary>
-        /// Checks if there are any existing appointments that overlap with the desired time.
-        /// </summary>
-        /// <param name="startTime">The start time of the appointment.</param>
-        /// <param name="endTime">The end time of the appointment.</param>
-        /// <param name="connection">The SQL connection.</param>
-        /// <param name="transaction">The SQL transaction (optional).</param>
-        /// <returns>The number of overlapping appointments.</returns>
+        /**
+         * Checks if there are any existing appointments that overlap with the desired time.
+         * 
+         * @param startTime The start time of the appointment.
+         * @param endTime The end time of the appointment.
+         * @param connection The SQL connection.
+         * @param transaction The SQL transaction (optional).
+         * @return The number of overlapping appointments.
+         */
         private int OverLapChecker(DateTime startTime, DateTime endTime, SqlConnection connection, SqlTransaction transaction = null)
         {
             int result = 0;
@@ -190,14 +194,15 @@
             return result;
         }
 
-        /// <summary>
-        /// Inserts a new appointment into the database.
-        /// </summary>
-        /// <param name="appointment">The appointment details.</param>
-        /// <param name="donorId">The associated donor ID.</param>
-        /// <returns>True if the appointment was successfully inserted, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the appointment is null.</exception>
-        /// <exception cref="Exception">Thrown when a database error occurs while inserting the appointment.</exception>
+        /**
+         * Inserts a new appointment into the database.
+         * 
+         * @param appointment The appointment details.
+         * @param donorId The associated donor ID.
+         * @return True if the appointment was successfully inserted, otherwise false.
+         * @throws ArgumentNullException Thrown when the appointment is null.
+         * @throws Exception Thrown when a database error occurs while inserting the appointment.
+         */
         public bool InsertAppointment(Appointment appointment, int donorId)
         {
             if (appointment == null)
@@ -316,12 +321,13 @@
         }
 
 
-        /// <summary>
-        /// Deletes an existing appointment from the database.
-        /// </summary>
-        /// <param name="appointment">The appointment details.</param>
-        /// <returns>True if the appointment was successfully deleted, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the appointment is null.</exception>
+        /**
+         * Deletes an existing appointment from the database.
+         * 
+         * @param appointment The appointment details.
+         * @return True if the appointment was successfully deleted, otherwise false.
+         * @throws ArgumentNullException Thrown when the appointment is null.
+         */
         public bool DeleteAppointment(Appointment appointment)
         {
             if (appointment == null)
@@ -366,13 +372,14 @@
             return isDeleted;
         }
 
-        /// <summary>
-        /// Retrieves a list of appointments associated with a specific donor.
-        /// </summary>
-        /// <param name="donorId">The donor ID.</param>
-        /// <returns>A list of <c>Appointment</c> objects.</returns>
-        /// <exception cref="ArgumentException">Thrown when the donor ID is invalid.</exception>
-        /// <exception cref="Exception">Thrown when a database error occurs while fetching appointments.</exception>
+        /**
+         * Retrieves a list of appointments associated with a specific donor.
+         * 
+         * @param donorId The donor ID.
+         * @return A list of Appointment objects.
+         * @throws ArgumentException Thrown when the donor ID is invalid.
+         * @throws Exception Thrown when a database error occurs while fetching appointments.
+         */
         public List<Appointment> GetAppointmentsByDonorId(int donorId)
         {
             // Validate the donorId input to ensure it's a positive integer.
@@ -442,11 +449,12 @@
             return appointments;
         }
 
-        /// <summary>
-        /// Deletes an appointment from the database based on its start time.
-        /// </summary>
-        /// <param name="startTime">The start time of the appointment.</param>
-        /// <returns>True if the appointment was successfully deleted, otherwise false.</returns>
+        /**
+         * Deletes an appointment from the database based on its start time.
+         * 
+         * @param startTime The start time of the appointment.
+         * @return True if the appointment was successfully deleted, otherwise false.
+         */
         public bool DeleteAppointmentByStartTime(DateTime startTime)
         {
             // Establish a connection to the database using the connection string
