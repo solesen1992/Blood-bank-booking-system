@@ -3,19 +3,20 @@ using API.Models;
 
 namespace API.ModelConversion
 {
-    /// <summary>
-    /// This class is responsible for converting Donor model objects to their corresponding 
-    /// Data Transfer Objects (DTOs) and vice versa. It provides methods for conversion 
-    /// for different use cases such as web and desktop applications.
-    /// </summary>
+    /**
+     * This class is responsible for converting Donor model objects to their corresponding 
+     * Data Transfer Objects (DTOs) and vice versa. It provides methods for conversion 
+     * for different use cases such as web and desktop applications.
+     */
     public class DonorDTOConvert
     {
-        /// <summary>
-        /// Converts a single Donor model object to a ReadDonorDTOForWeb, 
-        /// which is used for displaying donor details on a web interface.
-        /// </summary>
-        /// <param name="donor">The Donor model to convert.</param>
-        /// <returns>A ReadDonorDTOForWeb containing donor details.</returns>
+        /**
+         * Converts a single Donor model object to a ReadDonorDTOForWeb, 
+         * which is used for displaying donor details on a web interface.
+         *
+         * @param donor The Donor model to convert.
+         * @return A ReadDonorDTOForWeb containing donor details.
+         */
         public static ReadDonorDTOForWeb ToDonorDTOForWeb(Donor donor)
         {
             // If the donor is null, return null to avoid errors.
@@ -43,12 +44,13 @@ namespace API.ModelConversion
             return donorDTO;  // Return the populated DTO
         }
 
-        /// <summary>
-        /// Converts a single Donor model object to a ReadDonorDTOForDesktop, 
-        /// which is used for displaying donor details on a desktop interface.
-        /// </summary>
-        /// <param name="donor">The Donor model to convert.</param>
-        /// <returns>A ReadDonorDTOForDesktop containing donor details.</returns
+        /**
+         * Converts a single Donor model object to a ReadDonorDTOForDesktop, 
+         * which is used for displaying donor details on a desktop interface.
+         *
+         * @param donor The Donor model to convert.
+         * @return A ReadDonorDTOForDesktop containing donor details.
+         */
         public static ReadDonorDTOForDesktop ToDonorDTOForDesktop(Donor donor)
         {
             // If the donor is null, return null to avoid errors.
@@ -70,12 +72,13 @@ namespace API.ModelConversion
             return donorDTO;
         }
 
-        /// <summary>
-        /// Converts a list of Donor model objects into a list of ReadDonorDTOForDesktop.
-        /// This method is used for displaying multiple donors with their details on a desktop interface.
-        /// </summary>
-        /// <param name="donors">A list of Donor models to convert.</param>
-        /// <returns>A list of ReadDonorDTOForDesktop containing donor details.</returns>
+        /**
+         * Converts a list of Donor model objects into a list of ReadDonorDTOForDesktop.
+         * This method is used for displaying multiple donors with their details on a desktop interface.
+         *
+         * @param donors A list of Donor models to convert.
+         * @return A list of ReadDonorDTOForDesktop containing donor details.
+         */
         public static List<ReadDonorDTOForDesktop> ToDonorDTOForDesktopList(List<Donor> donors)
         {
             // Create a new list to hold the converted DTOs.
@@ -91,12 +94,13 @@ namespace API.ModelConversion
             return donorDTOList;
         }
 
-        /// <summary>
-        /// Converts a DonorDTOForWeb to a Donor model object, which is used for inserting or updating 
-        /// donor information in the database.
-        /// </summary>
-        /// <param name="donorDTO">The DonorDTOForWeb containing the donor details.</param>
-        /// <returns>A Donor model populated with the data from the DTO.</return
+        /**
+         * Converts a DonorDTOForWeb to a Donor model object, which is used for inserting or updating 
+         * donor information in the database.
+         *
+         * @param donorDTO The DonorDTOForWeb containing the donor details.
+         * @return A Donor model populated with the data from the DTO.
+         */
         public static Donor ToDonor(ReadDonorDTOForWeb donorDTO)
         {
             // If the donorDTO is null, return null to avoid errors.

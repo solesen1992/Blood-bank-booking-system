@@ -3,21 +3,22 @@ using API.Models;
 
 namespace API.ModelConversion
 {
-    /// <summary>
-    /// This class is responsible for converting Appointment model objects to their corresponding 
-    /// Data Transfer Objects (DTOs) and vice versa. It handles both individual and list conversions 
-    /// for different use cases such as desktop and web applications.
-    /// </summary>
+    /**
+     * This class is responsible for converting Appointment model objects to their corresponding 
+     * Data Transfer Objects (DTOs) and vice versa. It handles both individual and list conversions 
+     * for different use cases such as desktop and web applications.
+     */
     public class AppointmentDTOConvert
     {
-        /// <summary>
-        /// Converts a single Appointment model object to a ReadAppointmentDTO, 
-        /// which is used for displaying appointment details with donor information 
-        /// for the desktop application.
-        /// </summary>
-        /// <param name="appointment">The Appointment model to convert.</param>
-        /// <param name="donor">The Donor model used to populate donor information in the DTO.</param>
-        /// <returns>A ReadAppointmentDTO containing appointment and donor details.</returns>
+        /**
+         * Converts a single Appointment model object to a ReadAppointmentDTO, 
+         * which is used for displaying appointment details with donor information 
+         * for the desktop application.
+         *
+         * @param appointment The Appointment model to convert.
+         * @param donor The Donor model used to populate donor information in the DTO.
+         * @return A ReadAppointmentDTO containing appointment and donor details.
+         */
         public static ReadAppointmentDTO ToReadAppointmentDTO(Appointment appointment, Donor donor)
         {
             // Check if either appointment or donor is null.
@@ -49,14 +50,15 @@ namespace API.ModelConversion
             }
         }
 
-        /// <summary>
-        /// Converts a list of Appointment model objects into a list of ReadAppointmentDTOs.
-        /// This method finds matching donor information for each appointment and returns 
-        /// a list of DTOs for displaying appointments with donor details.
-        /// </summary>
-        /// <param name="appointments">A list of Appointment models to convert.</param>
-        /// <param name="donors">A list of Donor models used to populate donor information in each DTO.</param>
-        /// <returns>A list of ReadAppointmentDTOs containing appointment and donor details.</returns>
+        /**
+         * Converts a list of Appointment model objects into a list of ReadAppointmentDTOs.
+         * This method finds matching donor information for each appointment and returns 
+         * a list of DTOs for displaying appointments with donor details.
+         *
+         * @param appointments A list of Appointment models to convert.
+         * @param donors A list of Donor models used to populate donor information in each DTO.
+         * @return A list of ReadAppointmentDTOs containing appointment and donor details.
+         */
         public static List<ReadAppointmentDTO> ToReadAppointmentDTOList(List<Appointment> appointments, List<Donor> donors)
         {
             // Initialize a new list to store the DTOs of appointments
@@ -87,14 +89,15 @@ namespace API.ModelConversion
             return appointmentDTOList;
         }
 
-        /// <summary>
-        /// Converts a CreateAppointmentDTO to an Appointment model object. 
-        /// This method is used when creating a new appointment and associates it with a donor 
-        /// through their ID.
-        /// </summary>
-        /// <param name="dto">The CreateAppointmentDTO containing the details of the new appointment.</param>
-        /// <param name="donorId">The ID of the donor associated with the appointment.</param>
-        /// <returns>An Appointment model object populated with the data from the DTO.</returns>
+        /**
+         * Converts a CreateAppointmentDTO to an Appointment model object. 
+         * This method is used when creating a new appointment and associates it with a donor 
+         * through their ID.
+         *
+         * @param dto The CreateAppointmentDTO containing the details of the new appointment.
+         * @param donorId The ID of the donor associated with the appointment.
+         * @return An Appointment model object populated with the data from the DTO.
+         */
         public static Appointment ConvertToAppointment(CreateAppointmentDTO dto, int donorId)
         {
             // Return a new Appointment object.
@@ -106,14 +109,15 @@ namespace API.ModelConversion
             };
         }
 
-        /// <summary>
-        /// Optionally converts an Appointment model object to a CreateAppointmentDTO.
-        /// This method is used for converting an existing Appointment model back into 
-        /// a DTO format, useful for creating or editing appointments via APIs or UI forms.
-        /// </summary>
-        /// <param name="appointmentDTO">The CreateAppointmentDTO containing the details of the appointment.</param>
-        /// <returns>An Appointment model object populated with the details of the CreateAppointmentDTO.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the CreateAppointmentDTO is null.</exception>
+        /**
+         * Optionally converts an Appointment model object to a CreateAppointmentDTO.
+         * This method is used for converting an existing Appointment model back into 
+         * a DTO format, useful for creating or editing appointments via APIs or UI forms.
+         *
+         * @param appointmentDTO The CreateAppointmentDTO containing the details of the appointment.
+         * @return An Appointment model object populated with the details of the CreateAppointmentDTO.
+         * @throws ArgumentNullException when the CreateAppointmentDTO is null.
+         */
         public static Appointment ConvertToAppointment(CreateAppointmentDTO appointmentDTO)
         {
             if (appointmentDTO == null)
