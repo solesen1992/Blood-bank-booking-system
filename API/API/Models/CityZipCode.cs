@@ -1,9 +1,9 @@
 ﻿namespace API.Models
 {
-    /// <summary>
-    /// Represents a city and its associated zip code.
-    /// This class is used to store and manage the relationship between a city's name and its postal code.
-    /// </summary>
+    /*
+     * Represents a city and its associated zip code.
+     * This class is used to store and manage the relationship between a city's name and its postal code.
+     */
     public class CityZipCode
     {
         // Properties

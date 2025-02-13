@@ -1,11 +1,11 @@
 ﻿namespace API.Models
 {
-    /// <summary>
-    /// Represents a donor in the system. 
-    /// This class holds the donor's personal information, including contact details, city, 
-    /// and blood type. It also contains a foreign key to the CityZipCode and BloodType entities 
-    /// that represent the donor's location and blood type.
-    /// </summary>
+    /*
+     * Represents a donor in the system. 
+     * This class holds the donor's personal information, including contact details, city, 
+     * and blood type. It also contains a foreign key to the CityZipCode and BloodType entities 
+     * that represent the donor's location and blood type.
+     */
     public class Donor
     {
         // Properties
