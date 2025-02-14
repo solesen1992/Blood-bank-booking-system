@@ -1,8 +1,8 @@
 ﻿namespace WebApp.Models
 {
-    /// <summary>
-    /// Represents a donor with personal and contact information.
-    /// </summary>
+    /**
+     * Represents a donor with personal and contact information.
+     */
     public class Donor
     {
         //Properties

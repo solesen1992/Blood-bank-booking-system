@@ -2,7 +2,9 @@
 
 namespace WebApp.BusinessLogicLayer
 {
-    // Defines the contract for appointment-related business logic.
+    /** 
+     * Defines the contract for appointment-related business logic.
+     */
     public interface IAppointmentBusinessLogic
     {
         public bool IsValidAppointmentDate(DateTime startTime);
