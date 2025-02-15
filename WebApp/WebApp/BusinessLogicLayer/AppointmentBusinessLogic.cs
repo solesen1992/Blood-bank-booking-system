@@ -4,44 +4,47 @@ using WebApp.ServiceLayer;
 
 namespace WebApp.BusinessLogicLayer
 {
-    /// <summary>
-    /// Implements the <see cref="IAppointmentBusinessLogic"/> interface and handles the business logic related to appointments.
-    /// Responsible for validating appointment data, ensuring the integrity of appointment times, and interacting with the service layer 
-    /// to create appointments and retrieve unavailable appointment times.
-    /// Encapsulates the logic for validating time constraints (e.g., appointments cannot be in the past or too far in the future) 
-    /// and communicates with the underlying service layer to perform CRUD operations on appointments.
-    /// </summary>
+    /**
+     * Implements the IAppointmentBusinessLogic interface and handles the business logic related to appointments.
+     * Responsible for validating appointment data, ensuring the integrity of appointment times, and interacting with the service layer 
+     * to create appointments and retrieve unavailable appointment times.
+     * Encapsulates the logic for validating time constraints (e.g., appointments cannot be in the past or too far in the future) 
+     * and communicates with the underlying service layer to perform CRUD operations on appointments.
+     */
     public class AppointmentBusinessLogic : IAppointmentBusinessLogic
     {
         private readonly IAppointmentService _appointmentService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentBusinessLogic"/> class.
-        /// </summary>
-        /// <param name="appointmentService">The appointment service to interact with the service layer.</param>
+        /**
+         * Initializes a new instance of the AppointmentBusinessLogic class.
+         * 
+         * @param appointmentService The appointment service to interact with the service layer.
+         */
         public AppointmentBusinessLogic(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
 
-        /// <summary>
-        /// Validates if the appointment's start time is within the allowable range (not more than 6 months
-        /// in the future).
-        /// </summary>
-        /// <param name="startTime">The proposed start time of the appointment.</param>
-        /// <returns>A boolean indicating whether the start time is valid.</returns>
+        /**
+         * Validates if the appointment's start time is within the allowable range (not more than 6 months
+         * in the future).
+         * 
+         * @param startTime The proposed start time of the appointment.
+         * @return A boolean indicating whether the start time is valid.
+         */
         public bool IsValidAppointmentDate(DateTime startTime)
         {
             // Checks if the start time is within 6 months from the current date and time
             return startTime <= DateTime.Now.AddMonths(6);
         }
 
-        /// <summary>
-        /// Validates the start time of an appointment to ensure it meets business requirements.
-        /// </summary>
-        /// <param name="startTime">The start time of the appointment.</param>
-        /// <returns>A boolean indicating whether the start time is valid.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if the start time is not valid.</exception>
+        /**
+         * Validates the start time of an appointment to ensure it meets business requirements.
+         * 
+         * @param startTime The start time of the appointment.
+         * @return A boolean indicating whether the start time is valid.
+         * @throws InvalidOperationException If the start time is not valid.
+         */
         public bool IsValidAppointmentTimes(DateTime startTime)
         {
 
@@ -66,12 +69,13 @@ namespace WebApp.BusinessLogicLayer
             return true;
         }
 
-        /// <summary>
-        /// Creates an appointment by validating the provided details and using the service layer for API interaction.
-        /// </summary>
-        /// <param name="appointment">The appointment to be created.</param>
-        /// <returns>A boolean indicating whether the appointment was successfully created.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if validation fails.</exception>
+        /**
+         * Creates an appointment by validating the provided details and using the service layer for API interaction.
+         * 
+         * @param appointment The appointment to be created.
+         * @return A boolean indicating whether the appointment was successfully created.
+         * @throws InvalidOperationException If validation fails.
+         */
         public bool CreateAppointment(Appointment appointment)
         {
             bool result = false;
@@ -101,11 +105,12 @@ namespace WebApp.BusinessLogicLayer
             return result;
         }
 
-        /// <summary>
-        /// Retrieves unavailable appointment times for a specific date.
-        /// </summary>
-        /// <param name="date">The date for which unavailable times are to be fetched.</param>
-        /// <returns>A list of unavailable times in "HH:mm" format.</returns>
+        /**
+         * Retrieves unavailable appointment times for a specific date.
+         * 
+         * @param date The date for which unavailable times are to be fetched.
+         * @return A list of unavailable times in "HH:mm" format.
+         */
         public List<string> GetUnavailableTimes(DateTime date)
         {
             // Fetch all existing appointments from the service layer
@@ -143,10 +148,11 @@ namespace WebApp.BusinessLogicLayer
             return unavailableTimes;
         }
 
-        /// <summary>
-        /// Retrieves all future appointments.
-        /// </summary>
-        /// <returns>A list of <see cref="Appointment"/> objects that are scheduled for the future.</returns>
+        /**
+         * Retrieves all future appointments.
+         * 
+         * @return A list of Appointment objects that are scheduled for the future.
+         */
         public List<Appointment> GetFutureAppointments()
         {
             // Fetch all existing appointments from the service layer
@@ -168,11 +174,12 @@ namespace WebApp.BusinessLogicLayer
         }
 
 
-        /// <summary>
-        /// Retrieves all appointments for a specific donor based on their donor ID.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor whose appointments are to be fetched.</param>
-        /// <returns>A list of <see cref="Appointment"/> objects associated with the specified donor ID.</returns>
+        /**
+         * Retrieves all appointments for a specific donor based on their donor ID.
+         * 
+         * @param donorId The ID of the donor whose appointments are to be fetched.
+         * @return A list of Appointment objects associated with the specified donor ID.
+         */
         public List<Appointment> GetAppointmentsByDonorId(int donorId)
         {
             // Fetch appointments from the service layer based on the donor ID
@@ -180,12 +187,13 @@ namespace WebApp.BusinessLogicLayer
         }
 
 
-        /// <summary>
-        /// Deletes an appointment by its start time if it is a future appointment.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor associated with the appointment.</param>
-        /// <param name="startTime">The start time of the appointment to delete.</param>
-        /// <returns>A boolean indicating whether the appointment was successfully deleted.</returns>
+        /**
+         * Deletes an appointment by its start time if it is a future appointment.
+         * 
+         * @param donorId The ID of the donor associated with the appointment.
+         * @param startTime The start time of the appointment to delete.
+         * @return A boolean indicating whether the appointment was successfully deleted.
+         */
         public bool DeleteAppointmentByStartTime(int donorId, DateTime startTime)
         {
             // Call the service layer to delete the appointment by start time

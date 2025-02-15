@@ -4,35 +4,37 @@ using WebApp.ServiceLayer;
 
 namespace WebApp.BusinessLogicLayer
 {
-    /// <summary>
-    /// Handles the core business logic related to donor operations.
-    /// Acts as an intermediary between the controller and the service layer that interacts with the API.
-    /// Ensures that all business rules or validations are applied before interacting with the database.
-    /// </summary>
+    /**
+     * Handles the core business logic related to donor operations.
+     * Acts as an intermediary between the controller and the service layer that interacts with the API.
+     * Ensures that all business rules or validations are applied before interacting with the database.
+     */
     public class DonorBusinessLogic : IDonorBusinessLogic
     {
         private readonly IDonorService _donorService;
         private readonly IAppointmentBusinessLogic _appointmentBusinessLogic;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DonorBusinessLogic"/> class.
-        /// </summary>
-        /// <param name="inDonorService">The donor service to interact with the API.</param>
-        /// <param name="appointmentBusinessLogic">The appointment business logic to interact with appointments.</param>
+        /**
+         * Initializes a new instance of the DonorBusinessLogic class.
+         * 
+         * @param inDonorService The donor service to interact with the API.
+         * @param appointmentBusinessLogic The appointment business logic to interact with appointments.
+         */
         public DonorBusinessLogic(IDonorService inDonorService, IAppointmentBusinessLogic appointmentBusinessLogic)
         {
             _donorService = inDonorService; // Initialize the DonorService to interact with API.
             _appointmentBusinessLogic = appointmentBusinessLogic; // Initialize the AppointmentBusinessLogic to interact with appointments.
         }
 
-        /// <summary>
-        /// Creates a new donor. Business rules about CPR number, where CPR number must be filled out and must
-        /// be valid. To check if the CPR number is valid, this method will call the <see cref="IsValidCpr()"/>. 
-        /// Must be filled out before you can create a donor.
-        /// </summary>
-        /// <param name="donor">The donor to create.</param>
-        /// <param name="errorMessage">The error message if the creation fails.</param>
-        /// <returns>The ID of the created donor.</returns>
+        /**
+         * Creates a new donor. Business rules about CPR number, where CPR number must be filled out and must
+         * be valid. To check if the CPR number is valid, this method will call the IsValidCpr().
+         * Must be filled out before you can create a donor.
+         * 
+         * @param donor The donor to create.
+         * @param errorMessage The error message if the creation fails.
+         * @return The ID of the created donor.
+         */
         public int CreateDonor(Donor donor, out string errorMessage)
         {
             errorMessage = string.Empty;
@@ -53,11 +55,12 @@ namespace WebApp.BusinessLogicLayer
             return result;
         }
 
-        /// <summary>
-        /// Validates the CPR number, ensuring it does not contain a dash and follows the format DDMMYYXXXX.
-        /// </summary>
-        /// <param name="cpr">The CPR number to validate.</param>
-        /// <returns>True if the CPR number is valid, otherwise false.</returns>
+        /**
+         * Validates the CPR number, ensuring it does not contain a dash and follows the format DDMMYYXXXX.
+         * 
+         * @param cpr The CPR number to validate.
+         * @return True if the CPR number is valid, otherwise false.
+         */
         static bool IsValidCpr(string cpr)
         {
             // Regex pattern to match exactly 10 digits (DDMMYYXXXX)
@@ -72,12 +75,13 @@ namespace WebApp.BusinessLogicLayer
             return true;
         }
 
-        /// <summary>
-        /// Retrieves a donor by their ID.
-        /// This method interacts with the service layer to fetch the donor details from the API.
-        /// </summary>
-        /// <param name="id">The ID of the donor to retrieve.</param>
-        /// <returns>The donor with the specified ID.</returns>
+        /**
+         * Retrieves a donor by their ID.
+         * This method interacts with the service layer to fetch the donor details from the API.
+         * 
+         * @param id The ID of the donor to retrieve.
+         * @return The donor with the specified ID.
+         */
         public Donor GetDonorById(int id)
         {
             // Call the GetDonorByIdThroughApi method of _donorService to fetch the donor details
@@ -87,14 +91,15 @@ namespace WebApp.BusinessLogicLayer
             return donor;
         }
 
-        /// <summary>
-        /// Retrieves a donor and their associated appointments by donor ID.
-        /// Interacts with the service layer to fetch the donor details from the API.
-        /// If the donor is found, it also fetches the appointments related to the donor.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor to retrieve.</param>
-        /// <returns>A tuple containing the donor object and a list of their appointments. 
-        /// If the donor is not found, both elements of the tuple will be null.</returns>
+        /**
+         * Retrieves a donor and their associated appointments by donor ID.
+         * Interacts with the service layer to fetch the donor details from the API.
+         * If the donor is found, it also fetches the appointments related to the donor.
+         * 
+         * @param donorId The ID of the donor to retrieve.
+         * @return A tuple containing the donor object and a list of their appointments.
+         *         If the donor is not found, both elements of the tuple will be null.
+         */
         public (Donor donor, List<Appointment> appointments) GetDonorDetailsWithAppointments(int donorId)
         {
             // Fetch the donor details using the donor ID
