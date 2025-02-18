@@ -5,32 +5,31 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    /// <summary>
-    /// Handles HTTP requests related to donor operations (Create, Edit, Delete, etc.).
-    /// Acts as an intermediary between the view (UI) and the business logic layer (DonorBusinessLogic).
-    /// Validates the data and calls the appropriate methods in the business logic layer 
-    /// to perform operations such as creating a donor, editing donor information, and handling responses.
-    /// </summary>
+    /***
+     * Handles HTTP requests related to donor operations (Create, Edit, Delete, etc.).
+     * Acts as an intermediary between the view (UI) and the business logic layer (DonorBusinessLogic).
+     * Validates the data and calls the appropriate methods in the business logic layer 
+     * to perform operations such as creating a donor, editing donor information, and handling responses.
+     ***/
     public class DonorController : Controller
     {
         //readonly when objects shouldn't change
         private readonly IDonorBusinessLogic _donorBusinessLogic;
 
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DonorController"/> class and injects the business logic dependency.
-        /// </summary>
-        /// <param name="donorBusinessLogic">The business logic layer for donor operations, provided via dependency injection.</param>
+        /***
+         * Initializes a new instance of the DonorController class and injects the business logic dependency.
+         * @param donorBusinessLogic The business logic layer for donor operations, provided via dependency injection.
+         ***/
         public DonorController(IDonorBusinessLogic donorBusinessLogic)
         {
             _donorBusinessLogic = donorBusinessLogic;
         }
 
-        // GET: DonorController/Create
-        /// <summary>
-        /// Renders the view to create a new donor.
-        /// </summary>
-        /// <returns>The 'Create' view.</returns>
+        /***
+         * Renders the view to create a new donor.
+         * @returns The 'Create' view.
+         ***/
         public ActionResult Create()
         {
             // Returns the 'Create' view, where the user can fill out donor details.
@@ -38,12 +37,12 @@ namespace WebApp.Controllers
         }
 
         // POST: DonorController/Create
-        /// <summary>
-        /// Processes the form submission for creating a donor.
-        /// Validates the data and calls the business logic to add the donor to the system.
-        /// </summary>
-        /// <param name="donor">The donor data submitted from the form.</param>
-        /// <returns>A redirect to the Confirmation page if successful, otherwise the same view with error messages.</returns>
+        /***
+         * Processes the form submission for creating a donor.
+         * Validates the data and calls the business logic to add the donor to the system.
+         * @param donor The donor data submitted from the form.
+         * @returns A redirect to the Confirmation page if successful, otherwise the same view with error messages.
+         ***/
         [HttpPost]// This action handles HTTP POST requests
         [ValidateAntiForgeryToken] // Protects against cross-site request forgery (CSRF) attacks
         public ActionResult Create(Donor donor)
@@ -86,10 +85,10 @@ namespace WebApp.Controllers
         }
 
         // GET: DonorController/Confirmation
-        /// <summary>
-        /// Renders the confirmation page once the donor has been successfully added.
-        /// </summary>
-        /// <returns>The 'Confirmation' view.</returns>
+        /***
+         * Renders the confirmation page once the donor has been successfully added.
+         * @returns The 'Confirmation' view.
+         ***/
         public ActionResult Confirmation()
         {
             // Get the DonorId from TempData. It's saved as an object so we need to convert it to an int. If it's empty, it's null
@@ -113,10 +112,10 @@ namespace WebApp.Controllers
 
         // TO-DO
         // GET: DonorController/Index
-        /// <summary>
-        /// Renders the index page of the DonorController.
-        /// </summary>
-        /// <returns>The 'Index' view.</returns>
+        /***
+         * Renders the index page of the DonorController.
+         * @returns The 'Index' view.
+         ***/
         public ActionResult Index() // ActionResult can return different kinds of things like HTML - it returns it to the client/browser
         {
             // Returns the 'Index' view
@@ -124,10 +123,10 @@ namespace WebApp.Controllers
         }
 
         // GET: DonorController/DonorDetails
-        /// <summary>
-        /// Retrieves and displays the details of a specific donor along with their appointments.
-        /// </summary>
-        /// <returns>The 'DonorDetails' view.</returns> 
+        /***
+         * Retrieves and displays the details of a specific donor along with their appointments.
+         * @returns The 'DonorDetails' view.
+         ***/
         public ActionResult DonorDetails() // ActionResult returns a view that decides what the client sees in the browser
         {
             // Retrieve the donor ID from the cookie. The server reads cookies from Request.Cookies. The value is saved as a string. 
@@ -164,11 +163,11 @@ namespace WebApp.Controllers
 
         // TO-DO
         // GET: DonorController/Edit/5
-        /// <summary>
-        /// Renders the view to edit a donor.
-        /// </summary>
-        /// <param name="id">The ID of the donor to edit.</param>
-        /// <returns>The 'Edit' view.</returns>
+        /***
+         * Renders the view to edit a donor.
+         * @param id The ID of the donor to edit.
+         * @returns The 'Edit' view.
+         ***/
         public ActionResult Edit(int id)
         {
             return View();
@@ -177,12 +176,12 @@ namespace WebApp.Controllers
 
         // TO-DO
         // POST: DonorController/Edit/5
-        /// <summary>
-        /// Processes the form submission for editing a donor.
-        /// </summary>
-        /// <param name="id">The ID of the donor to edit.</param>
-        /// <param name="collection">The form collection with the updated donor data.</param>
-        /// <returns>A redirect to the index page if successful, otherwise the same view with error messages.</returns>
+        /***
+         * Processes the form submission for editing a donor.
+         * @param id The ID of the donor to edit.
+         * @param collection The form collection with the updated donor data.
+         * @returns A redirect to the index page if successful, otherwise the same view with error messages.
+         ***/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -198,11 +197,11 @@ namespace WebApp.Controllers
         }
 
         // TO-DO
-        /// <summary>
-        /// Renders the view to delete a donor.
-        /// </summary>
-        /// <param name="id">The ID of the donor to delete.</param>
-        /// <returns>The 'Delete' view.</returns>
+        /***
+         * Renders the view to delete a donor.
+         * @param id The ID of the donor to delete.
+         * @returns The 'Delete' view.
+         ***/
         public ActionResult Delete(int id)
         {
             return View();
@@ -210,12 +209,12 @@ namespace WebApp.Controllers
 
         // TO-DO
         // POST: DonorController/Delete/5
-        /// <summary>
-        /// Processes the form submission for deleting a donor.
-        /// </summary>
-        /// <param name="id">The ID of the donor to delete.</param>
-        /// <param name="collection">The form collection with the confirmation to delete.</param>
-        /// <returns>A redirect to the index page if successful, otherwise the same view with error messages.</returns>
+        /***
+         * Processes the form submission for deleting a donor.
+         * @param id The ID of the donor to delete.
+         * @param collection The form collection with the confirmation to delete.
+         * @returns A redirect to the index page if successful, otherwise the same view with error messages.
+         ***/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
