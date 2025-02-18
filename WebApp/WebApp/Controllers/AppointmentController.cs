@@ -5,22 +5,21 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    /// <summary>
-    /// Manages appointment-related actions in the MVC application.
-    /// Handles the entire appointment creation process, including selecting a date, time, and confirming the appointment.
-    /// Interacts with the business logic layer through the <see cref="IAppointmentBusinessLogic"/> interface for appointment data processing.
-    /// </summary>
+    /**
+     * Manages appointment-related actions in the MVC application.
+     * Handles the entire appointment creation process, including selecting a date, time, and confirming the appointment.
+     * Interacts with the business logic layer through the IAppointmentBusinessLogic interface for appointment data processing.
+     */
     public class AppointmentController : Controller
     {
         private readonly IAppointmentBusinessLogic _businessLogic;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentController"/> class and injects the business logic dependency needed for appointment operations.
-        /// The `IAppointmentBusinessLogic` interface is used to access the business logic layer without directly instantiating it.
-        /// </summary>
-        /// <param name="appointmentBusinessLogic">The business logic layer for appointment operations.</param>
-        /// 
-
+        /**
+         * Initializes a new instance of the AppointmentController class and injects the business logic dependency needed for appointment operations.
+         * The IAppointmentBusinessLogic interface is used to access the business logic layer without directly instantiating it.
+         * 
+         * @param appointmentBusinessLogic The business logic layer for appointment operations.
+         */
         public AppointmentController(IAppointmentBusinessLogic appointmentBusinessLogic)
         {
             _businessLogic = appointmentBusinessLogic;
@@ -28,10 +27,11 @@ namespace WebApp.Controllers
 
         // TO-DO
         // GET: AppointmentController
-        /// <summary>
-        /// Renders the index page of the AppointmentController.
-        /// </summary>
-        /// <returns>The 'Index' view.</returns>
+        /**
+         * Renders the index page of the AppointmentController.
+         * 
+         * @return The 'Index' view.
+         */
         public ActionResult Index()
         {
             return View();
@@ -39,22 +39,24 @@ namespace WebApp.Controllers
 
         // TO-DO
         // GET: AppointmentController/Details/5
-        /// <summary>
-        /// Retrieves and displays the details of a specific appointment by its ID
-        /// and displays them in the 'Details' view.
-        /// </summary>
-        /// <param name="id">The ID of the appointment to display details for.</param>
-        /// <returns>The 'Details' view.</returns>
+        /**
+         * Retrieves and displays the details of a specific appointment by its ID
+         * and displays them in the 'Details' view.
+         * 
+         * @param id The ID of the appointment to display details for.
+         * @return The 'Details' view.
+         */
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: AppointmentController/CreateAppointment
-        /// <summary>
-        /// Prepares the page for creating a new appointment and fetches donor ID from TempData.
-        /// </summary>
-        /// <returns>The 'CreateAppointment' view.</returns>
+        /**
+         * Prepares the page for creating a new appointment and fetches donor ID from TempData.
+         * 
+         * @return The 'CreateAppointment' view.
+         */
         public ActionResult CreateAppointment()
         {
             // Retrieves donor ID from TempData
@@ -74,11 +76,12 @@ namespace WebApp.Controllers
         }
 
         // POST: AppointmentController/CreateAppointment
-        /// <summary>
-        /// Handles the form submission for creating an appointment and validates the selected date.
-        /// </summary>
-        /// <param name="Date">The selected date for the appointment.</param>
-        /// <returns>A redirect to the CreateAppointmentTime page if successful, otherwise the same view with error messages.</returns>
+        /**
+         * Handles the form submission for creating an appointment and validates the selected date.
+         * 
+         * @param Date The selected date for the appointment.
+         * @return A redirect to the CreateAppointmentTime page if successful, otherwise the same view with error messages.
+         */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateAppointment(string Date)
@@ -123,10 +126,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Prepares the page to select an appointment time after a valid date has been chosen.
-        /// </summary>
-        /// <returns>The 'CreateAppointmentTime' view.</returns>
+        /**
+         * Prepares the page to select an appointment time after a valid date has been chosen.
+         * 
+         * @return The 'CreateAppointmentTime' view.
+         */
         public ActionResult CreateAppointmentTime()
         {
             // Checks if TempData contains the required "SelectedDate"
@@ -158,11 +162,12 @@ namespace WebApp.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Handles form submission for selecting an appointment time and validates it.
-        /// </summary>
-        /// <param name="Time">The selected time for the appointment.</param>
-        /// <returns>A redirect to the Confirmation page if successful, otherwise the same view with error messages.</returns>
+        /**
+         * Handles form submission for selecting an appointment time and validates it.
+         * 
+         * @param Time The selected time for the appointment.
+         * @return A redirect to the Confirmation page if successful, otherwise the same view with error messages.
+         */
         [HttpPost]
         [ValidateAntiForgeryToken] // Ensures the form submission is not a result of CSRF attack
         public ActionResult CreateAppointmentTime(string Time)
@@ -215,11 +220,11 @@ namespace WebApp.Controllers
             return RedirectToAction("CreateAppointment");
         }
 
-        // GET: AppointmentController/Confirmation
-        /// <summary>
-        /// Displays a confirmation page with the final appointment details.
-        /// </summary>
-        /// <returns>The 'Confirmation' view.</returns>
+        /**
+         * Displays a confirmation page with the final appointment details.
+         * 
+         * @return The 'Confirmation' view.
+         */
         public ActionResult Confirmation()
         {
             // Retrieves the appointment date/time from TempData
@@ -273,11 +278,11 @@ namespace WebApp.Controllers
         }
 
         // TO-DO
-        /// <summary>
-        /// Displays the form for editing an appointment.
-        /// </summary>
-        /// <param name="id">The ID of the appointment to edit.</param>
-        /// <returns>The 'Edit' view.</returns>
+        /**
+         * Displays the form for editing an appointment.
+         * 
+         * @returns the 'Edit' view
+         */
         public ActionResult Edit(int id)
         {
             return View();
@@ -285,12 +290,14 @@ namespace WebApp.Controllers
 
         // TO-DO
         // POST: AppointmentController/Edit/5
-        /// <summary>
-        /// Handles the submission of changes to an appointment.
-        /// </summary>
-        /// <param name="id">The ID of the appointment being edited.</param>
-        /// <param name="collection">The form data submitted by the user.</param>
-        /// <returns>A redirect to the index page if successful, otherwise the same view with error messages.</returns>
+
+        /**
+         * Handles the submission of changes to an appointment.
+         * 
+         * @param id The ID of the appointment being edited.
+         * @param collection The form data submitted by the user.
+         * @returns A redirect to the index page if successful, otherwise the same view with error messages.
+         */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -306,12 +313,13 @@ namespace WebApp.Controllers
         }
 
         // GET: AppointmentController/Delete/5
-        /// <summary>
-        /// Displays the form for deleting an appointment.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor associated with the appointment.</param>
-        /// <param name="startTime">The start time of the appointment to delete.</param>
-        /// <returns>The 'Delete' view.</returns>
+        /**
+         * Displays the form for deleting an appointment.
+         * 
+         * @param donorId The ID of the donor associated with the appointment.
+         * @param startTime The start time of the appointment to delete.
+         * @returns The 'Delete' view.
+         */
         public ActionResult Delete(int donorId, DateTime startTime)
         {
             // Pass the donor ID and start time to the view using ViewBag
@@ -323,13 +331,14 @@ namespace WebApp.Controllers
         }
 
         // AppointmentController/DeleteAppointment
-        /// <summary>
-        /// Handles the form submission for deleting an appointment.
-        /// Processes the deletion request, validates it, and calls the business logic to remove the appointment from the system.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor associated with the appointment.</param>
-        /// <param name="startTime">The start time of the appointment to delete.</param>
-        /// <returns>A redirect to the DonorDetails view after processing the deletion.</returns>
+        /**
+         * Handles the form submission for deleting an appointment.
+         * Processes the deletion request, validates it, and calls the business logic to remove the appointment from the system.
+         * 
+         * @param donorId The ID of the donor associated with the appointment.
+         * @param startTime The start time of the appointment to delete.
+         * @returns A redirect to the DonorDetails view after processing the deletion.
+         */
         [HttpPost]
         [ValidateAntiForgeryToken] // Protects against cross-site request forgery (CSRF) attacks
         public IActionResult DeleteAppointment(int donorId, DateTime startTime)
