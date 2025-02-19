@@ -4,36 +4,32 @@ using Newtonsoft.Json;
 
 namespace WebApp.ServiceLayer
 {
-    /// <summary>
-    /// DonorService class is responsible for handling donor-related data operations, specifically
-    /// interacting with REST API to fetch and create a donor records. This service sends HTTP requests to the API,
-    /// serializes the donor data into JSON format, and processes the API response.
-    /// </summary>
-    /// <remarks>
-    /// This class currently interacts with a remote API (via HttpClient) to create a donor,
-    /// and could be extended to support additional donor-related operations (like update, delete, retrieve).
-    /// </remarks>
+    /***
+     * DonorService class is responsible for handling donor-related data operations, specifically
+     * interacting with REST API to fetch and create a donor records. This service sends HTTP requests to the API,
+     * serializes the donor data into JSON format, and processes the API response.
+     ***/
     public class DonorService : IDonorService
     {
         private readonly string apiUrl;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DonorService"/> class.
-        /// </summary>
-        /// <param name="inConfiguration">The configuration interface to access app settings.</param>
+        /***
+         * Initializes a new instance of the DonorService class.
+         * @param inConfiguration The configuration interface to access app settings.
+         ***/
         public DonorService(IConfiguration inConfiguration)
         {
             // Access the API URL from appsettings.json
             apiUrl = inConfiguration["ApiSettings:DonorApiUrl"];
         }
 
-        /// <summary>
-        /// Sends a POST request to the REST API to create a new donor.
-        /// It serializes the <see cref="Donor"/> object into a JSON string, sends it in the request body, and checks
-        /// the response from the API to determine if the operation was successful.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object containing the donor details to be created.</param>
-        /// <returns>The ID of the created donor if successful, or 0 if the operation fails or the API returns an error response.</returns>
+        /***
+         * Sends a POST request to the REST API to create a new donor.
+         * It serializes the Donor object into a JSON string, sends it in the request body, and checks
+         * the response from the API to determine if the operation was successful.
+         * @param donor The Donor object containing the donor details to be created.
+         * @returns The ID of the created donor if successful, or 0 if the operation fails or the API returns an error response.
+         ***/
         public int CreateDonorThroughApi(Donor donor)
         {
             // Using HttpClient to make the HTTP request to the API
@@ -71,11 +67,11 @@ namespace WebApp.ServiceLayer
         }
 
 
-        /// <summary>
-        /// Extracts the ID of the newly created donor from the API response.
-        /// </summary>
-        /// <param name="response">The <see cref="HttpResponseMessage"/> object returned by the API after a successful POST request.</param>
-        /// <returns>The extracted donor ID if successful, or throws an exception with a descriptive error message if the response data cannot be parsed or an error occurs.</returns>
+        /***
+         * Extracts the ID of the newly created donor from the API response.
+         * @param response The HttpResponseMessage object returned by the API after a successful POST request.
+         * @returns The extracted donor ID if successful, or throws an exception with a descriptive error message if the response data cannot be parsed or an error occurs.
+         ***/
         public int GetIdFromCreatedDonor(HttpResponseMessage response)
         {
             // Using HttpClient to make the HTTP request to the API
@@ -111,11 +107,11 @@ namespace WebApp.ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Retrieves a donor by its ID from the API.
-        /// </summary>
-        /// <param name="id">The ID of the donor to be fetched.</param>
-        /// <returns>The <see cref="Donor"/> object fetched from the API, or null if an error occurs or the response is unsuccessful.</returns>
+        /***
+         * Retrieves a donor by its ID from the API.
+         * @param id The ID of the donor to be fetched.
+         * @returns The Donor object fetched from the API, or null if an error occurs or the response is unsuccessful.
+         ***/
         public Donor GetDonorById(int id)
         {
             // Creates an instance of HttpClient to send the HTTP requests

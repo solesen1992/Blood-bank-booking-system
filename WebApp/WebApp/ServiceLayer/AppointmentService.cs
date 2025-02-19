@@ -4,37 +4,31 @@ using Newtonsoft.Json;
 
 namespace WebApp.ServiceLayer
 {
-    /// <summary>
-    /// The AppointmentService class provides methods for interacting with the appointment-related endpoints 
-    /// of an external API. 
-    /// It acts as a service layer for handling appointment data and includes functionality for creating 
-    /// and retrieving appointments.
-    /// </summary>
-    /// <remarks>
-    /// - Uses the <see cref="HttpClient"/> class to make HTTP requests to the API.
-    /// - Relies on <see cref="JsonConvert"/> for serializing and deserializing data between JSON and C# objects.
-    /// - Retrieves the API base URL from configuration (e.g., appsettings.json) via dependency injection 
-    /// using the <see cref="IConfiguration"/> interface.
-    /// </remarks>
+    /***
+     * The AppointmentService class provides methods for interacting with the appointment-related endpoints 
+     * of an external API. 
+     * It acts as a service layer for handling appointment data and includes functionality for creating 
+     * and retrieving appointments.
+     ***/
     public class AppointmentService : IAppointmentService
     {
         private readonly string apiUrl;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentService"/> class.
-        /// </summary>
-        /// <param name="inConfiguration">The configuration interface to access app settings.</param>
+        /***
+         * Initializes a new instance of the AppointmentService class.
+         * @param inConfiguration The configuration interface to access app settings.
+         ***/
         public AppointmentService(IConfiguration inConfiguration)
         {
             // Access the API URL from appsettings.json
             apiUrl = inConfiguration["ApiSettings:AppointmentApiUrl"];
         }
 
-        /// <summary>
-        /// Sends a new appointment to the API for creation.
-        /// </summary>
-        /// <param name="appointment">The <see cref="Appointment"/> object to be created.</param>
-        /// <returns>A boolean indicating whether the API call was successful.</returns>
+        /***
+         * Sends a new appointment to the API for creation.
+         * @param appointment The Appointment object to be created.
+         * @returns A boolean indicating whether the API call was successful.
+         ***/
         public bool CreateAppointmentThroughApi(Appointment appointment)
         {
             // Using HttpClient to make the HTTP request to the API
@@ -64,11 +58,11 @@ namespace WebApp.ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Retrieves all existing appointments from the API.
-        /// </summary>
-        /// <returns>A list of <see cref="Appointment"/> objects fetched from the API. 
-        /// Returns an empty list if an error occurs or the response is unsuccessful.</returns>
+        /***
+         * Retrieves all existing appointments from the API.
+         * @returns A list of Appointment objects fetched from the API. 
+         * Returns an empty list if an error occurs or the response is unsuccessful.
+         ***/
         public List<Appointment> GetExistingAppointments()
         {
             using (var client = new HttpClient())
@@ -105,11 +99,11 @@ namespace WebApp.ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Retrieves all appointments for a specific donor based on their donor ID by making an HTTP GET request to the API.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor whose appointments are to be fetched.</param>
-        /// <returns>A list of <see cref="Appointment"/> objects associated with the specified donor ID.</returns>
+        /***
+         * Retrieves all appointments for a specific donor based on their donor ID by making an HTTP GET request to the API.
+         * @param donorId The ID of the donor whose appointments are to be fetched.
+         * @returns A list of Appointment objects associated with the specified donor ID.
+         ***/
         public List<Appointment> GetAppointmentsByDonorId(int donorId)
         {
             using (var client = new HttpClient())
@@ -146,12 +140,12 @@ namespace WebApp.ServiceLayer
         }
 
 
-        /// <summary>
-        /// Deletes an appointment for a specific donor based on their donor ID and the appointment's start time.
-        /// </summary>
-        /// <param name="donorId">The ID of the donor whose appointment is to be deleted.</param>
-        /// <param name="startTime">The start time of the appointment to be deleted.</param>
-        /// <returns>A boolean indicating whether the deletion was successful.</returns>
+        /***
+         * Deletes an appointment for a specific donor based on their donor ID and the appointment's start time.
+         * @param donorId The ID of the donor whose appointment is to be deleted.
+         * @param startTime The start time of the appointment to be deleted.
+         * @returns A boolean indicating whether the deletion was successful.
+         ***/
         public bool DeleteAppointmentByStartTime(int donorId, DateTime startTime)
         {
             using (var client = new HttpClient())

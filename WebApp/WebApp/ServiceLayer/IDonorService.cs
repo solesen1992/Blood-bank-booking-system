@@ -2,12 +2,11 @@
 
 namespace WebApp.ServiceLayer
 {
-    /// <summary>
-    /// The IDonorService interface defines the contract for donor-related operations in the service layer.
-    /// It ensures that any implementing class provides functionality for interacting with donor data,
-    /// currently focusing on donor creation and retrieval.
-    /// </summary>
-    ///
+    /**
+     * The IDonorService interface defines the contract for donor-related operations in the service layer.
+     * It ensures that any implementing class provides functionality for interacting with donor data,
+     * currently focusing on donor creation and retrieval.
+     */
     public interface IDonorService
     {
         public int CreateDonorThroughApi(Donor donor);
