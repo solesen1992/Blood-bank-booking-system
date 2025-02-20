@@ -320,7 +320,7 @@ namespace WebApp.Controllers
          * @param startTime The start time of the appointment to delete.
          * @returns The 'Delete' view.
          */
-        public ActionResult Delete(int donorId, DateTime startTime)
+        /*public ActionResult Delete(int donorId, DateTime startTime)
         {
             // Pass the donor ID and start time to the view using ViewBag
             ViewBag.DonorId = donorId;
@@ -328,7 +328,7 @@ namespace WebApp.Controllers
 
             // Returns the 'Delete' view, where the user can confirm the deletion of the appointment.
             return View();
-        }
+        }*/
 
         // AppointmentController/DeleteAppointment
         /**
@@ -339,7 +339,7 @@ namespace WebApp.Controllers
          * @param startTime The start time of the appointment to delete.
          * @returns A redirect to the DonorDetails view after processing the deletion.
          */
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken] // Protects against cross-site request forgery (CSRF) attacks
         public IActionResult DeleteAppointment(int donorId, DateTime startTime)
         {
@@ -367,7 +367,7 @@ namespace WebApp.Controllers
 
             // Redirect back to the DonorDetails view
             return RedirectToAction("DonorDetails", "Donor", new { id = donorId });
-        }
+        }*/
 
         // GET: AppointmentController
         /*public ActionResult Index()
