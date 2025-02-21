@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.DatabaseLayer;
+using API.Models;
 
 namespace API.BusinessLogicLayer
 {
@@ -30,7 +31,7 @@ namespace API.BusinessLogicLayer
          * @param donorAccess The donor access layer (optional).
          * @throws ArgumentNullException Thrown when `appointmentAccess` is null.
          */
-        public AppointmentLogic(IAppointmentAccess appointmentAccess, IDonorAccess donorAccess = null)
+        public AppointmentBusinessLogic(IAppointmentAccess appointmentAccess, IDonorAccess donorAccess = null)
         {
             if (appointmentAccess == null)
             {

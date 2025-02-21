@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.BusinessLogicLayer;
+using API.DTOs;
+using API.ModelConversion;
+using API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -13,8 +17,8 @@ namespace API.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
-        private readonly IAppointmentLogic _appointmentLogic;
-        private readonly IDonorLogic _donorLogic;
+        private readonly IAppointmentBusinessLogic _appointmentLogic;
+        private readonly IDonorBusinessLogic _donorLogic;
 
         /**
          * Initializes a new instance of the `AppointmentsController` class.
@@ -24,7 +28,7 @@ namespace API.Controllers
          * @param appointmentLogic The appointment logic service.
          * @param donorLogic The donor logic service.
          */
-        public AppointmentsController(IAppointmentLogic appointmentLogic, IDonorLogic donorLogic)
+        public AppointmentsController(IAppointmentBusinessLogic appointmentLogic, IDonorBusinessLogic donorLogic)
         {
             _appointmentLogic = appointmentLogic;
             _donorLogic = donorLogic;

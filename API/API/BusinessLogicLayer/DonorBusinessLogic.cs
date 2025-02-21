@@ -1,4 +1,7 @@
-﻿namespace API.BusinessLogicLayer
+﻿using API.DatabaseLayer;
+using API.Models;
+
+namespace API.BusinessLogicLayer
 {
     public class DonorBusinessLogic : IDonorBusinessLogic
     {
@@ -20,7 +23,7 @@
          * 
          * @param donorAccess The data access interface for donor-related operations.
          */
-        public DonorLogic(IDonorAccess donorAccess)
+        public DonorBusinessLogic(IDonorAccess donorAccess)
         {
             _donorAccess = donorAccess;
         }
@@ -143,6 +146,16 @@
         public Donor GetDonorById(int donorId)
         {
             return _donorAccess.GetDonorById(donorId);
+        }
+
+        List<Donor> IDonorBusinessLogic.GetDonors()
+        {
+            throw new NotImplementedException();
+        }
+
+        Donor IDonorBusinessLogic.GetDonorById(int donorId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

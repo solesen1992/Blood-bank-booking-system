@@ -1,4 +1,8 @@
-﻿namespace API.DatabaseLayer
+﻿using API.Models;
+using Dapper;
+using Microsoft.Data.SqlClient;
+
+namespace API.DatabaseLayer
 {
     /**
      * The AppointmentAccess class interacts with the database to manage appointment data.
@@ -488,6 +492,31 @@
                     return false;
                 }
             }
+        }
+
+        List<Appointment> IAppointmentAccess.GetAppointments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool InsertAppointment(Appointment appointment, int donorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteAppointment(Appointment appointment)
+        {
+            throw new NotImplementedException();
+        }
+
+        Appointment IAppointmentAccess.GetAppointmentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Appointment> IAppointmentAccess.GetAppointmentsByDonorId(int donorId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
