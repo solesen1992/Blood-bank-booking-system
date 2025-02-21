@@ -1,4 +1,6 @@
-﻿namespace API.DatabaseLayer
+﻿using API.Models;
+
+namespace API.DatabaseLayer
 {
     /**
      * The IDonorAccess interface defines the contract for accessing and manipulating donor data in the database.

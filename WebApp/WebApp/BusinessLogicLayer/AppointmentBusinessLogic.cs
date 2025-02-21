@@ -186,7 +186,6 @@ namespace WebApp.BusinessLogicLayer
             return _appointmentService.GetAppointmentsByDonorId(donorId);
         }
 
-
         /**
          * Deletes an appointment by its start time if it is a future appointment.
          * 
@@ -194,10 +193,10 @@ namespace WebApp.BusinessLogicLayer
          * @param startTime The start time of the appointment to delete.
          * @return A boolean indicating whether the appointment was successfully deleted.
          */
-        /*public bool DeleteAppointmentByStartTime(int donorId, DateTime startTime)
+        public bool DeleteAppointmentByStartTime(int donorId, DateTime startTime)
         {
             // Call the service layer to delete the appointment by start time
             return _appointmentService.DeleteAppointmentByStartTime(donorId, startTime);
-        }*/
+        }
     }
 }

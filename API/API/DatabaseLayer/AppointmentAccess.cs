@@ -493,30 +493,5 @@ namespace API.DatabaseLayer
                 }
             }
         }
-
-        List<Appointment> IAppointmentAccess.GetAppointments()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool InsertAppointment(Appointment appointment, int donorId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteAppointment(Appointment appointment)
-        {
-            throw new NotImplementedException();
-        }
-
-        Appointment IAppointmentAccess.GetAppointmentById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Appointment> IAppointmentAccess.GetAppointmentsByDonorId(int donorId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

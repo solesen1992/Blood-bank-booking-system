@@ -1,4 +1,6 @@
-﻿namespace API.DatabaseLayer
+﻿using API.Models;
+
+namespace API.DatabaseLayer
 {
     /**
      * This interface defines the operations for managing appointment data within the database.

@@ -1,4 +1,7 @@
-﻿using API.Models;
+﻿using API.BusinessLogicLayer;
+using API.DTOs;
+using API.ModelConversion;
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,7 +14,7 @@ namespace API.Controllers
     [ApiController] // Parameter binding
     public class DonorsController : ControllerBase
     {
-        private readonly IDonorLogic _donorLogic;
+        private readonly IDonorBusinessLogic _donorLogic;
 
         /**
          * Initializes a new instance of the `DonorsController` class.
@@ -20,7 +23,7 @@ namespace API.Controllers
          * 
          * @param donorLogic The donor logic service.
          */
-        public DonorsController(IDonorLogic donorLogic)
+        public DonorsController(IDonorBusinessLogic donorLogic)
         {
             _donorLogic = donorLogic;
         }
