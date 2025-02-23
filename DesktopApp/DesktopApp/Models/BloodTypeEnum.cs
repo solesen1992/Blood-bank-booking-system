@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.Models
 {
-    internal class BloodTypeEnum
+    public enum BloodTypeEnum
     {
+        APositive, ANegative, BPositive, BNegative, ABPositive, ABNegative, OPositive, ONegative
     }
 }

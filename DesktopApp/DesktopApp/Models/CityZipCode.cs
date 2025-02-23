@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.Models
 {
-    internal class CityZipCode
+    public class CityZipCode
     {
+        public int CityZipCodeId { get; set; }
+        public string City { get; set; }
+        public int ZipCode { get; set; }
     }
 }

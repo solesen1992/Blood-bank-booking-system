@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.BusinessLogicLayer
 {
-    internal class AppointmentLogic
+    internal class AppointmentLogic : IAppointmentLogic
     {
     }
 }
