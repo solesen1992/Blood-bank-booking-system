@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.BusinessLogicLayer
 {
-    internal class DonorLogic : IDonorLogic
+    public class DonorLogic : IDonorLogic
     {
+        private readonly DonorService _donorService;
+
+        public DonorLogic()
+        {
+            _donorService = new DonorService();
+        }
+
+        public List<Donor> GetDonors()
+        {
+            return _donorService.GetAllDonors();
+        }
+
+        public Donor GetDonorDetails(string cprNo)
+        {
+            return _donorService.GetDonorByCprNo(cprNo);
+        }
     }
 }

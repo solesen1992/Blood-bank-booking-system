@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.BusinessLogicLayer
 {
-    internal interface IDonorLogic
+    public interface IDonorLogic
     {
+        public List<Donor> GetDonors()
+
+        public Donor GetDonorDetails(string cprNo)
     }
 }
