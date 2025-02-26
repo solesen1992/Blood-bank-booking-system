@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesktopApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace DesktopApp.BusinessLogicLayer
 {
     public interface IDonorLogic
     {
-        public List<Donor> GetDonors()
+        public List<Donor> GetDonors();
 
-        public Donor GetDonorDetails(string cprNo)
+        public Donor GetDonorDetails(string cprNo);
     }
 }
