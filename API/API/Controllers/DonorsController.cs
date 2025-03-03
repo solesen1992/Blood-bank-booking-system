@@ -14,7 +14,7 @@ namespace API.Controllers
     [ApiController] // Parameter binding
     public class DonorsController : ControllerBase
     {
-        private readonly IDonorBusinessLogic _donorLogic;
+        private readonly IDonorLogic _donorLogic;
 
         /**
          * Initializes a new instance of the `DonorsController` class.
@@ -23,7 +23,7 @@ namespace API.Controllers
          * 
          * @param donorLogic The donor logic service.
          */
-        public DonorsController(IDonorBusinessLogic donorLogic)
+        public DonorsController(IDonorLogic donorLogic)
         {
             _donorLogic = donorLogic;
         }

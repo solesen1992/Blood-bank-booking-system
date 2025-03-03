@@ -17,8 +17,8 @@ namespace API.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
-        private readonly IAppointmentBusinessLogic _appointmentLogic;
-        private readonly IDonorBusinessLogic _donorLogic;
+        private readonly IAppointmentLogic _appointmentLogic;
+        private readonly IDonorLogic _donorLogic;
 
         /**
          * Initializes a new instance of the `AppointmentsController` class.
@@ -28,7 +28,7 @@ namespace API.Controllers
          * @param appointmentLogic The appointment logic service.
          * @param donorLogic The donor logic service.
          */
-        public AppointmentsController(IAppointmentBusinessLogic appointmentLogic, IDonorBusinessLogic donorLogic)
+        public AppointmentsController(IAppointmentLogic appointmentLogic, IDonorLogic donorLogic)
         {
             _appointmentLogic = appointmentLogic;
             _donorLogic = donorLogic;

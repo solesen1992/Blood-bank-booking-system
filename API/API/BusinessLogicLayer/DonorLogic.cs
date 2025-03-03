@@ -3,7 +3,7 @@ using API.Models;
 
 namespace API.BusinessLogicLayer
 {
-    public class DonorBusinessLogic : IDonorBusinessLogic
+    public class DonorLogic : IDonorLogic
     {
         /**
          * The `DonorLogic` class is responsible for handling the business logic related to donor operations.
@@ -23,7 +23,7 @@ namespace API.BusinessLogicLayer
          * 
          * @param donorAccess The data access interface for donor-related operations.
          */
-        public DonorBusinessLogic(IDonorAccess donorAccess)
+        public DonorLogic(IDonorAccess donorAccess)
         {
             _donorAccess = donorAccess;
         }
@@ -146,16 +146,6 @@ namespace API.BusinessLogicLayer
         public Donor GetDonorById(int donorId)
         {
             return _donorAccess.GetDonorById(donorId);
-        }
-
-        List<Donor> IDonorBusinessLogic.GetDonors()
-        {
-            throw new NotImplementedException();
-        }
-
-        Donor IDonorBusinessLogic.GetDonorById(int donorId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -504,20 +504,5 @@ namespace API.DatabaseLayer
             // Return whether the donor was successfully deleted
             return deleted;
         }
-
-        List<Donor> IDonorAccess.GetDonorsWithBloodTypeAndCity()
-        {
-            throw new NotImplementedException();
-        }
-
-        Donor IDonorAccess.GetDonorByCprNo(string cprNo)
-        {
-            throw new NotImplementedException();
-        }
-
-        Donor IDonorAccess.GetDonorById(int donorId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

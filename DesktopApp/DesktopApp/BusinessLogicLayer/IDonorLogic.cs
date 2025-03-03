@@ -11,6 +11,6 @@ namespace DesktopApp.BusinessLogicLayer
     {
         public List<Donor> GetDonors();
 
-        public Donor GetDonorDetails(string cprNo);
+        //public Donor GetDonorDetails(string cprNo);
     }
 }

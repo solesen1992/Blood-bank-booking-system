@@ -18,7 +18,7 @@ namespace API.BusinessLogicLayer
      * `InsertAppointment`, which validates and adds a new appointment to the database using data provided as a `CreateAppointmentDTO`. 
      * This class relies on model conversion utilities to map between database entities and DTOs, ensuring clean separation of concerns.
      */
-    public class AppointmentBusinessLogic : IAppointmentBusinessLogic
+    public class AppointmentLogic : IAppointmentLogic
     {
         private IAppointmentAccess _appointmentAccess;
         private IDonorAccess _donorAccess;
@@ -31,7 +31,7 @@ namespace API.BusinessLogicLayer
          * @param donorAccess The donor access layer (optional).
          * @throws ArgumentNullException Thrown when `appointmentAccess` is null.
          */
-        public AppointmentBusinessLogic(IAppointmentAccess appointmentAccess, IDonorAccess donorAccess = null)
+        public AppointmentLogic(IAppointmentAccess appointmentAccess, IDonorAccess donorAccess = null)
         {
             if (appointmentAccess == null)
             {

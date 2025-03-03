@@ -2,7 +2,7 @@
 
 namespace API.BusinessLogicLayer
 {
-    public interface IDonorBusinessLogic
+    public interface IDonorLogic
     {
         public List<Donor> GetDonors();
         public int GetDonorIdByCprNo(string cprNo);

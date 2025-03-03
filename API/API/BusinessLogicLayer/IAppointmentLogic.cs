@@ -2,7 +2,7 @@
 
 namespace API.BusinessLogicLayer
 {
-    public interface IAppointmentBusinessLogic
+    public interface IAppointmentLogic
     {
         public List<Appointment> GetAppointments();
         public bool InsertAppointment(Appointment appointment, int donorId);

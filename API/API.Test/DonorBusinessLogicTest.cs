@@ -66,7 +66,7 @@ namespace API.Test
 
             // Creates an instance of the `DonorLogic` class.
             // The `_donorAccessMock.Object` provides the mock implementation of `IDonorAccess` to the `DonorLogic` constructor.
-            var donorLogic = new DonorBusinessLogic(_donorAccessMock.Object);
+            var donorLogic = new DonorLogic(_donorAccessMock.Object);
 
             // Act
             // Calls the `GetDonors` method from the `DonorLogic` class.
@@ -101,7 +101,7 @@ namespace API.Test
             _donorAccessMock.Setup(da => da.GetDonorsWithBloodTypeAndCity())
                             .Returns(donorsList);
 
-            var donorLogic = new DonorBusinessLogic(_donorAccessMock.Object);
+            var donorLogic = new DonorLogic(_donorAccessMock.Object);
 
             Donor newDonor = new Donor
             {
@@ -156,7 +156,7 @@ namespace API.Test
                             // mock object (_donorAccessMock), it should remove the donor object from the donorsList.
                             .Callback<Donor>(donor => donorsList.Remove(donor));
 
-            var donorLogic = new DonorBusinessLogic(_donorAccessMock.Object); // Create an instance of the DonorLogic class
+            var donorLogic = new DonorLogic(_donorAccessMock.Object); // Create an instance of the DonorLogic class
 
             var oldDonor = new Donor
             {
@@ -196,7 +196,7 @@ namespace API.Test
         {
             // Arrange
             // Create an instance of DonorLogic with the mock object
-            var donorLogic = new DonorBusinessLogic(_donorAccessMock.Object);
+            var donorLogic = new DonorLogic(_donorAccessMock.Object);
 
             var oldDonor = new Donor
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DesktopApp.Models;
+using DesktopApp.ServiceLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +10,16 @@ namespace DesktopApp.BusinessLogicLayer
 {
     public class DonorLogic : IDonorLogic
     {
-        private readonly DonorService _donorService;
+        private readonly IDonorService _donorService;
 
         public DonorLogic()
         {
             _donorService = new DonorService();
+        }
+
+        public Donor GetDonorDetails(string cprNo)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Donor> GetDonors()
@@ -20,9 +27,14 @@ namespace DesktopApp.BusinessLogicLayer
             return _donorService.GetAllDonors();
         }
 
-        public Donor GetDonorDetails(string cprNo)
+        List<Donor> IDonorLogic.GetDonors()
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public Donor GetDonorDetails(string cprNo)
         {
             return _donorService.GetDonorByCprNo(cprNo);
-        }
+        }*/
     }
 }
