@@ -1,5 +1,4 @@
-﻿using DesktopApp.Helpers;
-using DesktopApp.Models;
+﻿using DesktopApp.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,11 +10,12 @@ namespace DesktopApp.ServiceLayer
 {
     public class DonorService : IDonorService
     {
-        private readonly string apiUrl;
+        // Hardcoded API URL directly in the Service Layer
+        private readonly string apiUrl = "https://localhost:7050/api/donors";  // Directly specify the URL here
+
 
         public DonorService()
         {
-            apiUrl = ConfigHelper.GetDonorApiUrl(); // Get URL from config
         }
 
         public List<Donor> GetAllDonors()
@@ -39,6 +39,38 @@ namespace DesktopApp.ServiceLayer
                 {
                     Console.WriteLine($"Error fetching all donors: {ex.Message}");
                     return new List<Donor>();
+                }
+            }
+        }
+
+        // Fetch donor by CPR number
+        public Donor GetDonorByCprNo(string cprNo)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var response = client.GetAsync($"{apiUrl}/cpr/{cprNo}").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = response.Content.ReadAsStringAsync().Result;
+
+                        // Deserialize the response into a Donor object
+                        var donor = JsonConvert.DeserializeObject<Donor>(json);
+
+                        return donor;  // Return the donor object
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to fetch donor. Status code: {response.StatusCode}");
+                        return null;  // Return null if no donor is found
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching donor by CPR number: {ex.Message}");
+                    return null;  // Return null if there is an error
                 }
             }
         }

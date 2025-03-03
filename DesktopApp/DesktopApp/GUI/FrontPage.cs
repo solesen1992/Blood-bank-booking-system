@@ -12,19 +12,22 @@ using System.Windows.Forms;
 
 namespace DesktopApp.GUI
 {
-    public partial class StartPage : Form
+    public partial class FrontPage : Form
     {
         private readonly DonorLogic _donorLogic;
 
-        public StartPage()
+        public FrontPage()
         {
             InitializeComponent();
             _donorLogic = new DonorLogic();
 
-            // Set form to start maximized
             this.WindowState = FormWindowState.Maximized;
         }
 
+        private void FrontPage_Load(object sender, EventArgs e)
+        {
+
+        }
         private void btnLoadDonors_Click(object sender, EventArgs e)
         {
             try
@@ -55,33 +58,22 @@ namespace DesktopApp.GUI
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        
         private void dataGridViewDonors_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*if (e.RowIndex >= 0) // Ensure a valid row is clicked
+            if (e.RowIndex >= 0) // Ensure a valid row is clicked
             {
                 string selectedDonorCprNo = dataGridViewDonors.Rows[e.RowIndex].Cells["CprNo"].Value?.ToString() ?? string.Empty;
                 if (!string.IsNullOrEmpty(selectedDonorCprNo))
                 {
                     // Fetch donor details using the donor logic
                     var selectedDonor = _donorLogic.GetDonorDetails(selectedDonorCprNo);
-
-                    if (selectedDonor != null)
-                    {
-                        // Open the DonorDetailsForm and pass the donor data
-                        DonorDetailsForm detailsForm = new DonorDetailsForm(_donorLogic, selectedDonorCprNo);
-                        detailsForm.ShowDialog(); // Show the details form as a modal dialog
-                    }
-                    else
-                    {
-                        MessageBox.Show("Donor not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
                 }
                 else
                 {
                     MessageBox.Show("Invalid CPR No.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }*/
+            }
         }
     }
 }

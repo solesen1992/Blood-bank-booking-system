@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.ServiceLayer
 {
-    internal class IAppointmentService
+    public interface IAppointmentService
     {
     }
 }

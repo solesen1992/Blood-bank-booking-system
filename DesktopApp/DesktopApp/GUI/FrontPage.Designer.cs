@@ -1,6 +1,6 @@
 ﻿namespace DesktopApp.GUI
 {
-    partial class StartPage
+    partial class FrontPage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,47 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridViewDonors = new DataGridView();
             btnLoadDonors = new Button();
+            dataGridViewDonors = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDonors).BeginInit();
             SuspendLayout();
             // 
-            // dataGridViewDonors
-            // 
-            dataGridViewDonors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewDonors.Location = new Point(2, 1);
-            dataGridViewDonors.Name = "dataGridViewDonors";
-            dataGridViewDonors.RowHeadersWidth = 62;
-            dataGridViewDonors.Size = new Size(595, 447);
-            dataGridViewDonors.TabIndex = 0;
-            dataGridViewDonors.CellContentClick += dataGridViewDonors_CellContentClick;
-            // 
             // btnLoadDonors
             // 
-            btnLoadDonors.Location = new Point(603, 5);
+            btnLoadDonors.Location = new Point(744, 12);
             btnLoadDonors.Name = "btnLoadDonors";
-            btnLoadDonors.Size = new Size(185, 55);
-            btnLoadDonors.TabIndex = 1;
+            btnLoadDonors.Size = new Size(216, 60);
+            btnLoadDonors.TabIndex = 0;
             btnLoadDonors.Text = "Get donors";
             btnLoadDonors.UseVisualStyleBackColor = true;
             btnLoadDonors.Click += btnLoadDonors_Click;
             // 
-            // StartPage
+            // dataGridViewDonors
+            // 
+            dataGridViewDonors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewDonors.Location = new Point(12, 12);
+            dataGridViewDonors.Name = "dataGridViewDonors";
+            dataGridViewDonors.RowHeadersWidth = 62;
+            dataGridViewDonors.Size = new Size(726, 507);
+            dataGridViewDonors.TabIndex = 1;
+            dataGridViewDonors.CellContentClick += dataGridViewDonors_CellContentClick;
+            // 
+            // FrontPage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(btnLoadDonors);
+            ClientSize = new Size(972, 526);
             Controls.Add(dataGridViewDonors);
-            Name = "StartPage";
-            Text = "StartPage";
+            Controls.Add(btnLoadDonors);
+            Name = "FrontPage";
+            Text = "FrontPage";
+            Load += FrontPage_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewDonors).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataGridViewDonors;
         private Button btnLoadDonors;
+        private DataGridView dataGridViewDonors;
     }
 }

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.ServiceLayer
 {
-    public class IDonorService
+    public interface IDonorService
     {
-        internal List<Donor> GetAllDonors()
-        {
-            throw new NotImplementedException();
-        }
+        List<Donor> GetAllDonors();
+
+        Donor GetDonorByCprNo(string cprNo);
     }
 }
