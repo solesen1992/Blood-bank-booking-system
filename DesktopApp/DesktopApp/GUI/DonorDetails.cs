@@ -26,5 +26,25 @@ namespace DesktopApp.GUI
         {
 
         }
+
+        private void button_Edit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_Delete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Close_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

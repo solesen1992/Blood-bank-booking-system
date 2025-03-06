@@ -29,31 +29,31 @@
         private void InitializeComponent()
         {
             donorBox = new GroupBox();
+            label_ZipCode = new Label();
+            label_City = new Label();
+            label_Adresse = new Label();
+            label_Email = new Label();
+            label_PhoneNo = new Label();
+            label_Bloodtype = new Label();
+            label_Lastname = new Label();
+            button_Edit = new Button();
+            textBox_ZipCode = new TextBox();
+            textBox_City = new TextBox();
+            textBox_Adresse = new TextBox();
+            textBox_Email = new TextBox();
+            textBox_PhoneNo = new TextBox();
+            BloodtypeScroll = new ComboBox();
+            textBox_Lastname = new TextBox();
+            textBox_Firstname = new TextBox();
+            label_Firstname = new Label();
             textBox_CprNo = new TextBox();
             cprLabel = new Label();
-            label_Firstname = new Label();
-            textBox_Firstname = new TextBox();
-            textBox_Lastname = new TextBox();
-            BloodtypeScroll = new ComboBox();
-            textBox_PhoneNo = new TextBox();
-            textBox_Email = new TextBox();
-            textBox_Adresse = new TextBox();
-            textBox_City = new TextBox();
-            textBox_ZipCode = new TextBox();
-            button_Edit = new Button();
-            label_Lastname = new Label();
-            label_Bloodtype = new Label();
-            label_PhoneNo = new Label();
-            label_Email = new Label();
-            label_Adresse = new Label();
-            label_City = new Label();
-            label_ZipCode = new Label();
             groupBox_Appointment = new GroupBox();
-            label_TimeStart = new Label();
-            textBox_Start = new TextBox();
-            label_EndTime = new Label();
-            textBox_End = new TextBox();
             button_Delete = new Button();
+            textBox_End = new TextBox();
+            label_EndTime = new Label();
+            textBox_Start = new TextBox();
+            label_TimeStart = new Label();
             btn_Save = new Button();
             btn_Close = new Button();
             donorBox.SuspendLayout();
@@ -89,6 +89,146 @@
             donorBox.Text = "Donor";
             donorBox.Enter += groupBox1_Enter;
             // 
+            // label_ZipCode
+            // 
+            label_ZipCode.AutoSize = true;
+            label_ZipCode.Location = new Point(357, 143);
+            label_ZipCode.Name = "label_ZipCode";
+            label_ZipCode.Size = new Size(113, 25);
+            label_ZipCode.TabIndex = 18;
+            label_ZipCode.Text = "Postnummer";
+            // 
+            // label_City
+            // 
+            label_City.AutoSize = true;
+            label_City.Location = new Point(357, 89);
+            label_City.Name = "label_City";
+            label_City.Size = new Size(31, 25);
+            label_City.TabIndex = 17;
+            label_City.Text = "By";
+            // 
+            // label_Adresse
+            // 
+            label_Adresse.AutoSize = true;
+            label_Adresse.Location = new Point(357, 36);
+            label_Adresse.Name = "label_Adresse";
+            label_Adresse.Size = new Size(75, 25);
+            label_Adresse.TabIndex = 16;
+            label_Adresse.Text = "Adresse";
+            // 
+            // label_Email
+            // 
+            label_Email.AutoSize = true;
+            label_Email.Location = new Point(11, 312);
+            label_Email.Name = "label_Email";
+            label_Email.Size = new Size(61, 25);
+            label_Email.TabIndex = 15;
+            label_Email.Text = "E-mail";
+            // 
+            // label_PhoneNo
+            // 
+            label_PhoneNo.AutoSize = true;
+            label_PhoneNo.Location = new Point(11, 253);
+            label_PhoneNo.Name = "label_PhoneNo";
+            label_PhoneNo.Size = new Size(68, 25);
+            label_PhoneNo.TabIndex = 14;
+            label_PhoneNo.Text = "Telefon";
+            // 
+            // label_Bloodtype
+            // 
+            label_Bloodtype.AutoSize = true;
+            label_Bloodtype.Location = new Point(11, 197);
+            label_Bloodtype.Name = "label_Bloodtype";
+            label_Bloodtype.Size = new Size(83, 25);
+            label_Bloodtype.TabIndex = 13;
+            label_Bloodtype.Text = "Blodtype";
+            // 
+            // label_Lastname
+            // 
+            label_Lastname.AutoSize = true;
+            label_Lastname.Location = new Point(11, 140);
+            label_Lastname.Name = "label_Lastname";
+            label_Lastname.Size = new Size(86, 25);
+            label_Lastname.TabIndex = 12;
+            label_Lastname.Text = "Efternavn";
+            // 
+            // button_Edit
+            // 
+            button_Edit.Location = new Point(477, 370);
+            button_Edit.Name = "button_Edit";
+            button_Edit.Size = new Size(179, 34);
+            button_Edit.TabIndex = 11;
+            button_Edit.Text = "Rediger";
+            button_Edit.UseVisualStyleBackColor = true;
+            button_Edit.Click += button_Edit_Click;
+            // 
+            // textBox_ZipCode
+            // 
+            textBox_ZipCode.Location = new Point(477, 140);
+            textBox_ZipCode.Name = "textBox_ZipCode";
+            textBox_ZipCode.Size = new Size(180, 31);
+            textBox_ZipCode.TabIndex = 10;
+            // 
+            // textBox_City
+            // 
+            textBox_City.Location = new Point(477, 89);
+            textBox_City.Name = "textBox_City";
+            textBox_City.Size = new Size(181, 31);
+            textBox_City.TabIndex = 9;
+            // 
+            // textBox_Adresse
+            // 
+            textBox_Adresse.Location = new Point(478, 33);
+            textBox_Adresse.Name = "textBox_Adresse";
+            textBox_Adresse.Size = new Size(180, 31);
+            textBox_Adresse.TabIndex = 8;
+            // 
+            // textBox_Email
+            // 
+            textBox_Email.Location = new Point(106, 309);
+            textBox_Email.Name = "textBox_Email";
+            textBox_Email.Size = new Size(180, 31);
+            textBox_Email.TabIndex = 7;
+            // 
+            // textBox_PhoneNo
+            // 
+            textBox_PhoneNo.Location = new Point(104, 253);
+            textBox_PhoneNo.Name = "textBox_PhoneNo";
+            textBox_PhoneNo.Size = new Size(182, 31);
+            textBox_PhoneNo.TabIndex = 6;
+            // 
+            // BloodtypeScroll
+            // 
+            BloodtypeScroll.FormattingEnabled = true;
+            BloodtypeScroll.Location = new Point(105, 194);
+            BloodtypeScroll.Name = "BloodtypeScroll";
+            BloodtypeScroll.Size = new Size(181, 33);
+            BloodtypeScroll.TabIndex = 5;
+            // 
+            // textBox_Lastname
+            // 
+            textBox_Lastname.Location = new Point(106, 140);
+            textBox_Lastname.Name = "textBox_Lastname";
+            textBox_Lastname.Size = new Size(180, 31);
+            textBox_Lastname.TabIndex = 4;
+            // 
+            // textBox_Firstname
+            // 
+            textBox_Firstname.Location = new Point(106, 87);
+            textBox_Firstname.Name = "textBox_Firstname";
+            textBox_Firstname.Size = new Size(180, 31);
+            textBox_Firstname.TabIndex = 3;
+            // 
+            // label_Firstname
+            // 
+            label_Firstname.AutoSize = true;
+            label_Firstname.Location = new Point(11, 87);
+            label_Firstname.Name = "label_Firstname";
+            label_Firstname.Size = new Size(76, 25);
+            label_Firstname.TabIndex = 2;
+            label_Firstname.Text = "Fornavn";
+            label_Firstname.Click += label1_Click;
+            // 
             // textBox_CprNo
             // 
             textBox_CprNo.Location = new Point(105, 36);
@@ -105,145 +245,6 @@
             cprLabel.TabIndex = 0;
             cprLabel.Text = "CPR-nr.";
             // 
-            // label_Firstname
-            // 
-            label_Firstname.AutoSize = true;
-            label_Firstname.Location = new Point(11, 87);
-            label_Firstname.Name = "label_Firstname";
-            label_Firstname.Size = new Size(76, 25);
-            label_Firstname.TabIndex = 2;
-            label_Firstname.Text = "Fornavn";
-            label_Firstname.Click += label1_Click;
-            // 
-            // textBox_Firstname
-            // 
-            textBox_Firstname.Location = new Point(106, 87);
-            textBox_Firstname.Name = "textBox_Firstname";
-            textBox_Firstname.Size = new Size(180, 31);
-            textBox_Firstname.TabIndex = 3;
-            // 
-            // textBox_Lastname
-            // 
-            textBox_Lastname.Location = new Point(106, 140);
-            textBox_Lastname.Name = "textBox_Lastname";
-            textBox_Lastname.Size = new Size(180, 31);
-            textBox_Lastname.TabIndex = 4;
-            // 
-            // BloodtypeScroll
-            // 
-            BloodtypeScroll.FormattingEnabled = true;
-            BloodtypeScroll.Location = new Point(105, 194);
-            BloodtypeScroll.Name = "BloodtypeScroll";
-            BloodtypeScroll.Size = new Size(181, 33);
-            BloodtypeScroll.TabIndex = 5;
-            // 
-            // textBox_PhoneNo
-            // 
-            textBox_PhoneNo.Location = new Point(104, 253);
-            textBox_PhoneNo.Name = "textBox_PhoneNo";
-            textBox_PhoneNo.Size = new Size(182, 31);
-            textBox_PhoneNo.TabIndex = 6;
-            // 
-            // textBox_Email
-            // 
-            textBox_Email.Location = new Point(106, 309);
-            textBox_Email.Name = "textBox_Email";
-            textBox_Email.Size = new Size(180, 31);
-            textBox_Email.TabIndex = 7;
-            // 
-            // textBox_Adresse
-            // 
-            textBox_Adresse.Location = new Point(478, 33);
-            textBox_Adresse.Name = "textBox_Adresse";
-            textBox_Adresse.Size = new Size(180, 31);
-            textBox_Adresse.TabIndex = 8;
-            // 
-            // textBox_City
-            // 
-            textBox_City.Location = new Point(477, 89);
-            textBox_City.Name = "textBox_City";
-            textBox_City.Size = new Size(181, 31);
-            textBox_City.TabIndex = 9;
-            // 
-            // textBox_ZipCode
-            // 
-            textBox_ZipCode.Location = new Point(477, 140);
-            textBox_ZipCode.Name = "textBox_ZipCode";
-            textBox_ZipCode.Size = new Size(180, 31);
-            textBox_ZipCode.TabIndex = 10;
-            // 
-            // button_Edit
-            // 
-            button_Edit.Location = new Point(477, 370);
-            button_Edit.Name = "button_Edit";
-            button_Edit.Size = new Size(179, 34);
-            button_Edit.TabIndex = 11;
-            button_Edit.Text = "Rediger";
-            button_Edit.UseVisualStyleBackColor = true;
-            // 
-            // label_Lastname
-            // 
-            label_Lastname.AutoSize = true;
-            label_Lastname.Location = new Point(11, 140);
-            label_Lastname.Name = "label_Lastname";
-            label_Lastname.Size = new Size(86, 25);
-            label_Lastname.TabIndex = 12;
-            label_Lastname.Text = "Efternavn";
-            // 
-            // label_Bloodtype
-            // 
-            label_Bloodtype.AutoSize = true;
-            label_Bloodtype.Location = new Point(11, 197);
-            label_Bloodtype.Name = "label_Bloodtype";
-            label_Bloodtype.Size = new Size(83, 25);
-            label_Bloodtype.TabIndex = 13;
-            label_Bloodtype.Text = "Blodtype";
-            // 
-            // label_PhoneNo
-            // 
-            label_PhoneNo.AutoSize = true;
-            label_PhoneNo.Location = new Point(11, 253);
-            label_PhoneNo.Name = "label_PhoneNo";
-            label_PhoneNo.Size = new Size(68, 25);
-            label_PhoneNo.TabIndex = 14;
-            label_PhoneNo.Text = "Telefon";
-            // 
-            // label_Email
-            // 
-            label_Email.AutoSize = true;
-            label_Email.Location = new Point(11, 312);
-            label_Email.Name = "label_Email";
-            label_Email.Size = new Size(61, 25);
-            label_Email.TabIndex = 15;
-            label_Email.Text = "E-mail";
-            // 
-            // label_Adresse
-            // 
-            label_Adresse.AutoSize = true;
-            label_Adresse.Location = new Point(357, 36);
-            label_Adresse.Name = "label_Adresse";
-            label_Adresse.Size = new Size(75, 25);
-            label_Adresse.TabIndex = 16;
-            label_Adresse.Text = "Adresse";
-            // 
-            // label_City
-            // 
-            label_City.AutoSize = true;
-            label_City.Location = new Point(357, 89);
-            label_City.Name = "label_City";
-            label_City.Size = new Size(31, 25);
-            label_City.TabIndex = 17;
-            label_City.Text = "By";
-            // 
-            // label_ZipCode
-            // 
-            label_ZipCode.AutoSize = true;
-            label_ZipCode.Location = new Point(357, 143);
-            label_ZipCode.Name = "label_ZipCode";
-            label_ZipCode.Size = new Size(113, 25);
-            label_ZipCode.TabIndex = 18;
-            label_ZipCode.Text = "Postnummer";
-            // 
             // groupBox_Appointment
             // 
             groupBox_Appointment.Controls.Add(button_Delete);
@@ -258,21 +259,22 @@
             groupBox_Appointment.TabStop = false;
             groupBox_Appointment.Text = "Kommende tid";
             // 
-            // label_TimeStart
+            // button_Delete
             // 
-            label_TimeStart.AutoSize = true;
-            label_TimeStart.Location = new Point(11, 66);
-            label_TimeStart.Name = "label_TimeStart";
-            label_TimeStart.Size = new Size(93, 25);
-            label_TimeStart.TabIndex = 0;
-            label_TimeStart.Text = "Tid - Start:";
+            button_Delete.Location = new Point(477, 132);
+            button_Delete.Name = "button_Delete";
+            button_Delete.Size = new Size(178, 34);
+            button_Delete.TabIndex = 4;
+            button_Delete.Text = "Aflys tid";
+            button_Delete.UseVisualStyleBackColor = true;
+            button_Delete.Click += button_Delete_Click;
             // 
-            // textBox_Start
+            // textBox_End
             // 
-            textBox_Start.Location = new Point(110, 66);
-            textBox_Start.Name = "textBox_Start";
-            textBox_Start.Size = new Size(176, 31);
-            textBox_Start.TabIndex = 1;
+            textBox_End.Location = new Point(477, 66);
+            textBox_End.Name = "textBox_End";
+            textBox_End.Size = new Size(178, 31);
+            textBox_End.TabIndex = 3;
             // 
             // label_EndTime
             // 
@@ -283,21 +285,21 @@
             label_EndTime.TabIndex = 2;
             label_EndTime.Text = "Tid - Slut:";
             // 
-            // textBox_End
+            // textBox_Start
             // 
-            textBox_End.Location = new Point(477, 66);
-            textBox_End.Name = "textBox_End";
-            textBox_End.Size = new Size(178, 31);
-            textBox_End.TabIndex = 3;
+            textBox_Start.Location = new Point(110, 66);
+            textBox_Start.Name = "textBox_Start";
+            textBox_Start.Size = new Size(176, 31);
+            textBox_Start.TabIndex = 1;
             // 
-            // button_Delete
+            // label_TimeStart
             // 
-            button_Delete.Location = new Point(477, 132);
-            button_Delete.Name = "button_Delete";
-            button_Delete.Size = new Size(178, 34);
-            button_Delete.TabIndex = 4;
-            button_Delete.Text = "Aflys tid";
-            button_Delete.UseVisualStyleBackColor = true;
+            label_TimeStart.AutoSize = true;
+            label_TimeStart.Location = new Point(11, 66);
+            label_TimeStart.Name = "label_TimeStart";
+            label_TimeStart.Size = new Size(93, 25);
+            label_TimeStart.TabIndex = 0;
+            label_TimeStart.Text = "Tid - Start:";
             // 
             // btn_Save
             // 
@@ -307,6 +309,7 @@
             btn_Save.TabIndex = 2;
             btn_Save.Text = "Gem";
             btn_Save.UseVisualStyleBackColor = true;
+            btn_Save.Click += btn_Save_Click;
             // 
             // btn_Close
             // 
@@ -316,6 +319,7 @@
             btn_Close.TabIndex = 3;
             btn_Close.Text = "Luk";
             btn_Close.UseVisualStyleBackColor = true;
+            btn_Close.Click += btn_Close_Click;
             // 
             // DonorDetails
             // 
