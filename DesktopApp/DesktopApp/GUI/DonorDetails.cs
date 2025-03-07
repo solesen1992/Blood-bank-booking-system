@@ -42,9 +42,13 @@ namespace DesktopApp.GUI
 
         }
 
+        /**
+         * The close button.
+         * Closes the form.
+         */
         private void btn_Close_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }
