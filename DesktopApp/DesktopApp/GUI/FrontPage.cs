@@ -35,6 +35,13 @@ namespace DesktopApp.GUI
                 // Fetch donors from the Business Logic Layer
                 List<Donor> donors = _donorLogic.GetDonors();
 
+                // Check if donors were returned
+                if (donors == null || donors.Count == 0)
+                {
+                    MessageBox.Show("No donors found.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 // Set the data source of the DataGridView
                 dataGridViewDonors.DataSource = donors;
                 // Set custom headers if necessary
