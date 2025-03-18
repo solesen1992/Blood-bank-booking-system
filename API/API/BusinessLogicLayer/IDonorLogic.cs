@@ -1,7 +1,11 @@
-﻿using API.Models;
+﻿using API.Model;
 
 namespace API.BusinessLogicLayer
 {
+    /// <summary>
+    /// The <c>IDonorLogic</c> interface defines the contract for the business logic layer related to donor operations.
+    /// It specifies the methods that need to be implemented by any class that handles donor data management.
+    /// </summary>
     public interface IDonorLogic
     {
         public List<Donor> GetDonors();
@@ -15,4 +19,5 @@ namespace API.BusinessLogicLayer
         object GetDonorByCprNo(string cprNo);
         public Donor GetDonorById(int donorId);
     }
+
 }

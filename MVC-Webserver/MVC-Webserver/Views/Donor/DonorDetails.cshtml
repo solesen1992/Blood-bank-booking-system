@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Donor Details";
+    var donor = ViewBag.Donor as MVC_Webserver.Models.Donor; //Passed from the controller as a Donor object, it is cast to the Donor type here
+    var appointments = ViewBag.Appointments as List<MVC_Webserver.Models.Appointment>; //Passed as a list of appointments (List<MVC_Webserver.Models.Appointment>)
+}
+
+<!-- Display donor information in a card format -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h3 class="card-title">Donor Oplysninger</h3>
+        <p><strong>Navn:</strong> @donor.DonorFirstName @donor.DonorLastName</p>
+        <p><strong>Blodtype:</strong> @donor.BloodType</p>
+        <p><strong>Telefonnummer:</strong> @donor.DonorPhoneNo</p>
+        <p><strong>Email:</strong> @donor.DonorEmail</p>
+        <p><strong>Adresse:</strong> @donor.DonorStreet</p>
+        <p><strong>By:</strong> @donor.City</p>
+        <p><strong>Postnummer:</strong> @donor.ZipCode</p>
+    </div>
+</div>
+
+<!-- Display donor's appointment details in a card format -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h3 class="card-title">Tid til bloddonation</h3>
+        <!-- Check if there are any appointments -->
+        @if (appointments != null && appointments.Count > 0)
+        {
+            <!-- Display appointments in a list format -->
+            <ul class="list-group">
+                <!-- Iterate through the list of appointments -->
+                @foreach (var appointment in appointments)
+                {
+                    <!-- Display appointment details in a list item -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <!-- Display the appointment date and time -->
+                            <p class="mb-1"><strong>Tidspunkt:</strong> @appointment.StartTime.ToString("d. MMMM yyyy"), kl. @appointment.StartTime.ToString("HH.mm") - @appointment.EndTime.ToString("HH.mm")</p>
+
+                        </div>
+                        <!-- Form to delete an appointment -->
+                        <form asp-action="DeleteAppointment" asp-controller="Appointment" method="post" class="mb-0">
+                            <input type="hidden" name="donorId" value="@donor.DonorId" />
+                            <input type="hidden" name="startTime" value="@appointment.StartTime" />
+                            <!-- Button to delete the appointment -->
+                            <button type="submit" class="btn btn-danger">Slet</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <!-- Display message if no appointments are available -->
+            <p>Ingen tid til bloddonation</p>
+        }
+    </div>
+</div>

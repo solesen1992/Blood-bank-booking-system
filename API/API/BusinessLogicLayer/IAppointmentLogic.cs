@@ -1,4 +1,15 @@
-﻿using API.Models;
+﻿using API.DTOs;
+using API.Model;
+using System.Collections.Generic;
+
+/// <summary>
+/// The <c>IAppointmentLogic</c> interface defines the business logic operations for handling appointments in the system.
+/// It includes methods to manage appointment data, such as retrieving, updating, inserting, and deleting appointments.
+/// </summary>
+/// <remarks>
+/// The methods interact with DTOs (Data Transfer Objects) like <c>ReadAppointmentDTO</c>, 
+/// <c>CreateAppointmentDTO</c>, and the <c>Appointment</c> model.
+/// </remarks>
 
 namespace API.BusinessLogicLayer
 {

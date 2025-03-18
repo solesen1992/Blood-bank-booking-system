@@ -1,18 +1,20 @@
 ﻿using API.BusinessLogicLayer;
 using API.DTOs;
+using API.Model;
 using API.ModelConversion;
-using API.Models;
 using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
 {
-    /**
-     * The `AppointmentsController` class is part of the API layer of the application, responsible for handling HTTP requests 
-     * related to appointments. It defines endpoints for interacting with appointment data, including retrieving, inserting, 
-     * updating, and deleting appointments.
-     * The class uses dependency injection to receive the `IAppointmentLogic` interface, which provides the business logic 
-     * necessary for handling the appointment data operations.
-     */
+    /// <summary>
+    /// The <c>AppointmentsController</c> class is part of the API layer of the application, responsible for handling HTTP requests 
+    /// related to appointments. It defines endpoints for interacting with appointment data, including retrieving, inserting, 
+    /// updating, and deleting appointments.
+    /// The class uses dependency injection to receive the <c>IAppointmentLogic</c> interface, which provides the business logic 
+    /// necessary for handling the appointment data operations.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentsController : ControllerBase
@@ -20,14 +22,13 @@ namespace API.Controllers
         private readonly IAppointmentLogic _appointmentLogic;
         private readonly IDonorLogic _donorLogic;
 
-        /**
-         * Initializes a new instance of the `AppointmentsController` class.
-         * This constructor uses dependency injection to inject the `IAppointmentLogic` and `IDonorLogic` services.
-         * The injected services provide business logic for handling appointment-related operations.
-         * 
-         * @param appointmentLogic The appointment logic service.
-         * @param donorLogic The donor logic service.
-         */
+        /// <summary>
+        /// Initializes a new instance of the <c>AppointmentsController</c> class.
+        /// This constructor uses dependency injection to inject the <c>IAppointmentLogic</c> and <c>IDonorLogic</c> services.
+        /// The injected services provide business logic for handling appointment-related operations.
+        /// </summary>
+        /// <param name="appointmentLogic">The appointment logic service.</param>
+        /// <param name="donorLogic">The donor logic service.</param>
         public AppointmentsController(IAppointmentLogic appointmentLogic, IDonorLogic donorLogic)
         {
             _appointmentLogic = appointmentLogic;
@@ -35,13 +36,13 @@ namespace API.Controllers
         }
 
 
-        /**
-         * Handles GET requests to retrieve all appointments.
-         * Calls the `GetAppointments` method from the appointment logic layer and 
-         * returns either a list of appointments or a 404 Not Found response if no appointments exist.
-         * 
-         * @return A list of `ReadAppointmentDTO` objects.
-         */
+        /// <summary>
+        /// Handles GET requests to retrieve all appointments.
+        /// It calls the <c>GetAppointments</c> method from the appointment logic layer and 
+        /// returns either a list of appointments or a 404 Not Found response if no appointments exist.
+        /// </summary>
+        /// <returns>A list of <c>ReadAppointmentDTO</c> objects.</returns>
+        // GET: api/<AppointmentsController>
         [HttpGet]
         public ActionResult<List<ReadAppointmentDTO>> GetAppointments()
         {
@@ -75,14 +76,16 @@ namespace API.Controllers
             }
         }
 
-        /**
-         * Handles POST requests to insert a new appointment into the system.
-         * It validates the input appointment data (`CreateAppointmentDTO`), and if valid, 
-         * calls the `InsertAppointment` method from the business logic layer.
-         * 
-         * @param appointmentDTO The appointment data transfer object.
-         * @return An `ActionResult` indicating the result of the operation.
-         */
+        /// <summary>
+        /// Handles POST requests to insert a new appointment into the system.
+        /// It validates the input appointment data (<c>CreateAppointmentDTO</c>), and if valid, 
+        /// calls the <c>InsertAppointment</c> method from the business logic layer.
+        /// It returns a success message if the appointment is inserted successfully,
+        /// or a 500 status code if the insertion fails.
+        /// </summary>
+        /// <param name="appointmentDTO">The appointment data transfer object.</param>
+        /// <returns>An <c>ActionResult</c> indicating the result of the operation.</returns>
+        // POST api/<AppointmentsController>
         [HttpPost]
         // The method definition, which takes an object of type CreateAppointmentDTO as input. 
         // The [FromBody] attribute indicates that the data should be deserialized from the request body.
@@ -127,15 +130,14 @@ namespace API.Controllers
             }
         }
 
-        /**
-         * Handles DELETE requests to remove an appointment by ID.
-         * Calls the `DeleteAppointment` method from the appointment logic layer and 
-         * returns a success message if the appointment is deleted successfully,
-         * or a 404 status code if the appointment is not found.
-         * 
-         * @param id The appointment ID.
-         * @return An `ActionResult` indicating the result of the operation.
-         */
+        /// <summary>
+        /// Handles DELETE requests to remove an appointment by ID.
+        /// It calls the <c>DeleteAppointment</c> method from the appointment logic layer and 
+        /// returns a success message if the appointment is deleted successfully,
+        /// or a 404 status code if the appointment is not found.
+        /// </summary>
+        /// <param name="id">The appointment ID.</param>
+        /// <returns>An <c>ActionResult</c> indicating the result of the operation.</returns>
         // DELETE api/<AppointmentsController>/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
@@ -173,14 +175,13 @@ namespace API.Controllers
         }
 
 
-        /**
-         * Handles GET requests to retrieve all appointments for a specific donor.
-         * Calls the `GetAppointmentsByDonorId` method from the appointment logic layer and 
-         * returns either a list of appointments or a 404 Not Found response if no appointments exist for the donor.
-         * 
-         * @param donorId The donor ID.
-         * @return A list of `ReadAppointmentDTO` objects.
-         */
+        /// <summary>
+        /// Handles GET requests to retrieve all appointments for a specific donor.
+        /// It calls the <c>GetAppointmentsByDonorId</c> method from the appointment logic layer and 
+        /// returns either a list of appointments or a 404 Not Found response if no appointments exist for the donor.
+        /// </summary>
+        /// <param name="donorId">The donor ID.</param>
+        /// <returns>A list of <c>ReadAppointmentDTO</c> objects.</returns>
         // GET api/<AppointmentsController>/donor/{donorId}
         [HttpGet("donor/{donorId}")]
         public ActionResult<List<ReadAppointmentDTO>> GetAppointmentsByDonorId(int donorId)
@@ -216,16 +217,15 @@ namespace API.Controllers
         }
 
 
-        /**
-         * Handles DELETE requests to remove an appointment by donor ID and start time.
-         * Calls the `DeleteAppointmentByStartTime` method from the appointment logic layer and 
-         * returns a success message if the appointment is deleted successfully,
-         * or a 404 status code if the appointment is not found.
-         * 
-         * @param donorId The donor ID.
-         * @param startTime The start time of the appointment.
-         * @return An `ActionResult` indicating the result of the operation.
-         */
+        /// <summary>
+        /// Handles DELETE requests to remove an appointment by donor ID and start time.
+        /// It calls the <c>DeleteAppointmentByStartTime</c> method from the appointment logic layer and 
+        /// returns a success message if the appointment is deleted successfully,
+        /// or a 404 status code if the appointment is not found.
+        /// </summary>
+        /// <param name="donorId">The donor ID.</param>
+        /// <param name="startTime">The start time of the appointment.</param>
+        /// <returns>An <c>ActionResult</c> indicating the result of the operation.</returns>
         // DELETE api/<AppointmentsController>/donor/{donorId}/{startTime}
         [HttpDelete("{donorId}/{startTime}")]
         public ActionResult Delete(int donorId, DateTime startTime)
@@ -252,5 +252,6 @@ namespace API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
     }
 }

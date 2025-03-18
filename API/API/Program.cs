@@ -1,7 +1,7 @@
 // Create a new instance of the WebApplication builder, passing the arguments from the command line
 using API.BusinessLogicLayer;
 using API.DatabaseLayer;
-using API.Models;
+using API.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 

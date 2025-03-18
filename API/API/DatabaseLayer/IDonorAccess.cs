@@ -1,13 +1,14 @@
-﻿using API.Models;
+﻿using API.Model;
 
 namespace API.DatabaseLayer
 {
-    /**
-     * The IDonorAccess interface defines the contract for accessing and manipulating donor data in the database.
-     * It includes methods for retrieving donors based on specific criteria (blood type and city), inserting, updating, 
-     * and deleting donor records. Implementing classes will provide the actual logic for interacting with the database 
-     * to perform these operations.
-     */
+
+    /// <summary>
+    /// The IDonorAccess interface defines the contract for accessing and manipulating donor data in the database.
+    /// It includes methods for retrieving donors based on specific criteria (blood type and city), inserting, updating, 
+    /// and deleting donor records. Implementing classes will provide the actual logic for interacting with the database 
+    /// to perform these operations.
+    /// </summary>
     public interface IDonorAccess
     {
         public List<Donor> GetDonorsWithBloodTypeAndCity();
@@ -17,7 +18,7 @@ namespace API.DatabaseLayer
         bool DoesCprNoExist(string cprNo);
         public Donor UpdateDonor(Donor donor);
 
-        public bool DeleteDonor(Donor donor);
+        public bool DeleteDonor(Donor donor); 
         public Donor GetDonorById(int donorId);
     }
 }

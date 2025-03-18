@@ -1,0 +1,74 @@
+﻿@model MVC_Webserver.Models.Appointment
+@{
+    ViewData["Title"] = "Vælg tidspunkt";
+}
+
+<h1>Vælg tid</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <!-- Form to create an appointment time, the form action is specified as "CreateAppointmentTime" -->
+        <form asp-action="CreateAppointmentTime"> 
+            <!-- Validation summary that displays model state errors -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @{
+                // Retrieve any error messages stored in TempData
+                string timeTaken = TempData["TakenTime"] as string;
+                if (timeTaken != null)
+                {
+                    //if (error != null) {
+
+
+                    // Show the error message if there's a taken time error
+                    <div class="alert alert-danger">
+                        @timeTaken
+                    </div>
+                }
+                TempData.Remove("TakenTime");
+                
+            }
+
+            <!-- Display a heading and a form to select a time for a specific date -->
+            <h3>Select a time for @ViewBag.SelectedDate.ToString("yyyy-MM-dd")</h3>
+            <!-- Create a dropdown for selecting time slots -->
+            <select id="Time" name="Time" class="form-control" required>
+                @{
+                    // Get unavailable times from ViewBag
+                    var unavailableTimes = ViewBag.UnavailableTimes as List<string> ?? new List<string>();
+                    // Iterate over hours from 8 to 15 (8 AM to 3 PM)
+                    for (int hour = 8; hour < 16; hour++)
+                    {
+                        // Iterate over minute intervals (00 and 30)
+                        foreach (var minute in new[] { "00", "30" })
+                        {
+                            var time = $"{hour:D2}:{minute}";
+                            // Add time options that are not in the list of unavailable times
+                            if (!unavailableTimes.Contains(time))
+                            {
+                                <option value="@time">@time</option>
+                            }
+                        }
+                    }
+                }
+            </select>
+            <!-- Submit button to confirm the selected time -->
+            <button type="submit" class="btn btn-primary">Bekræft</button>
+
+            <!-- Hidden field to store DonorId for the appointment -->
+            <input type="hidden" name="DonorId" value="@ViewBag.DonorId" />
+        </form>
+
+    </div>
+
+    <!-- Link to go back to the list of appointments -->
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    <!-- Section for scripts -->
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using API.Model;
 using System.Data.SqlClient;
 using Dapper;
 /*SHOULD HAVE BEEN DELETED*/
@@ -31,7 +31,7 @@ namespace API.DatabaseLayer
         /// Gets or sets the connection string to the database.
         /// The connection string is used to connect to the database for querying.
         /// </summary>
-        public string? ConnectionString { get; set; }
+           public string? ConnectionString { get; set; }
 
         /// <summary>
         /// Gets all blood types from the database.
@@ -75,6 +75,6 @@ namespace API.DatabaseLayer
             return bloodTypes;
         }
 
-    }
+    }  
 }
 

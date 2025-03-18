@@ -1,0 +1,21 @@
+﻿@model MVC_Webserver.Models.Donor
+
+@{
+    ViewData["Title"] = "Bekræftelse";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h2>Tak for din registering</h2>
+    <p>Vi har nu modtaget din registrering</p>
+    <p>Klik på knappen nedeunder for at book din førte tid</p>
+</div>
+
+<div class="my-4" style="text-align: left;">
+    <a href="@Url.Action("CreateAppointment", "Appointment")" class="btn btn-primary btn-lg">
+        Book din første tid
+    </a>
+</div>
+
