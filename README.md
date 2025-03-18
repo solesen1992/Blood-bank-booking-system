@@ -13,6 +13,9 @@ If I were to make changes to the project, I would for example do the following:
 # Screenshot of web app
 <img width="800" alt="Image" src="https://github.com/user-attachments/assets/b13ab693-f2c9-4fb5-aa8b-c452660f262e" />
 
+# Screenshot of desktop app
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/594b268d-63b9-48dd-8bf0-e2f42fa20db0" />
+
 # Documentation
 ## Functionality
 This project is a blood bank booking system designed to facilitate donor management and appointment scheduling. The system is built as a distributed architecture consisting of the following components:
