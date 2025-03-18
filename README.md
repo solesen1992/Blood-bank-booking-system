@@ -4,7 +4,7 @@ Blood bank booking systemet is made for DonateBlood.Now (not a real company). Th
 
 The project uses concurrency, ACID principles etc. It's made in C# and MS SQL.
 
-This project is made on the 3rd semester of my education in computer science as a part of a group project in the fall of 2024. Since the project, I've made changes to the project to fix errors etc.
+This project is made on the 3rd semester of my education in computer science as a part of a group project in the fall of 2024.
 
 # Screenshot of web app
 <img width="800" alt="Image" src="https://github.com/user-attachments/assets/b13ab693-f2c9-4fb5-aa8b-c452660f262e" />
