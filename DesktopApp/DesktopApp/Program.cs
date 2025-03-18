@@ -1,3 +1,4 @@
+using DesktopApp.BusinessLogicLayer;
 using DesktopApp.ServiceLayer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace DesktopApp
         /// </summary>
         /// <param name="args">The command-line arguments.</param>
         [STAThread]
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         { // Handle how the GUI looks
             Application.SetHighDpiMode(HighDpiMode.SystemAware); // Set the high DPI mode to system aware
             Application.EnableVisualStyles(); // Enable visual styles
@@ -42,6 +43,40 @@ namespace DesktopApp
 
             // Run the application
             Application.Run(new MainPage(configuration)); // Directly instantiate and run the main form
+        }*/
+
+        static void Main(string[] args)
+        {
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            var builder = Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                })
+                .ConfigureServices((context, services) =>
+                {
+                    // Register IConfiguration
+                    services.AddSingleton<IConfiguration>(context.Configuration);
+
+                    // Register services
+                    services.AddTransient<DonorLogic>();
+                    services.AddTransient<AppointmentLogic>();
+                    services.AddTransient<DonorServiceAccess>();
+                    services.AddTransient<AppointmentServiceAccess>();
+
+                    // Register MainPage
+                    services.AddTransient<MainPage>();
+                });
+
+            var host = builder.Build();
+
+            // Resolve MainPage from DI
+            var mainPage = host.Services.GetRequiredService<MainPage>();
+
+            Application.Run(mainPage);
         }
     }
 }
