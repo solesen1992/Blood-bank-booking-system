@@ -6,7 +6,7 @@ namespace MVC_Webserver.Models
     /// </summary>
     public class Login
     {
-        public string? Username { get; set; } // Can be null
+        public string? Username { get; set; }
         public string? Password { get; set; }
     }
 }

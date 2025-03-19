@@ -6,15 +6,15 @@ using System.Globalization;
 
 public class AppointmentLogic : IAppointmentLogic
 {
-    readonly IAppointmentServiceAccess _aCall;
+    private readonly IAppointmentServiceAccess _appointmentServiceAccess;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AppointmentLogic"/> class.
     /// </summary>
     /// <param name="configuration">The configuration.</param>
-    public AppointmentLogic(IConfiguration configuration)
+    public AppointmentLogic()
     {
-        _aCall = new AppointmentServiceAccess(configuration);
+        _appointmentServiceAccess = new AppointmentServiceAccess();
     }
 
     /// <summary>
@@ -26,13 +26,13 @@ public class AppointmentLogic : IAppointmentLogic
         // Initializes a variable to hold the retrieved appointments, starting as null.
         List<Appointment>? foundAppointments = null;
 
-        // Checks if the _aCall object (service layer) is not null.
-        if (_aCall != null)
+        // Checks if the _appointmentServiceAccess object (service layer) is not null.
+        if (_appointmentServiceAccess != null)
         {
             // Calls the GetDonorAppointments method from the AppointmentServiceAccess class
-            foundAppointments = await _aCall.GetDonorAppointments(); 
+            foundAppointments = await _appointmentServiceAccess.GetDonorAppointments(); 
         }
-        // Returns the retrieved appointments, or null if no appointments were found or _aCall was null.
+        // Returns the retrieved appointments, or null if no appointments were found or _appointmentServiceAccess was null.
         return foundAppointments;
     }
 
@@ -182,7 +182,7 @@ public class AppointmentLogic : IAppointmentLogic
     public bool DeleteAppointmentByStartTime(int donorId, DateTime startTime)
     {
         // Call the service layer to delete the appointment by start time
-        return _aCall.DeleteAppointmentByStartTime(donorId, startTime);
+        return _appointmentServiceAccess.DeleteAppointmentByStartTime(donorId, startTime);
     }
 }
 

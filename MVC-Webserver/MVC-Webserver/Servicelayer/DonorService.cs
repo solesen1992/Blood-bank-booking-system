@@ -22,6 +22,8 @@ namespace MVC_Webserver.Servicelayer
     public class DonorService : IDonorService
     {
         private readonly string apiUrl;
+        //private readonly HttpClient _httpClient;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DonorService"/> class.
@@ -31,6 +33,8 @@ namespace MVC_Webserver.Servicelayer
         {           
             // Access the API URL from appsettings.json
             apiUrl = inConfiguration["ApiSettings:DonorApiUrl"];
+            //Her kan man fx genbruge HttpClient i stedet for at oprette ny HttpClient ved hver operationer:
+            //_httpClient = new HttpClient();
         }
 
         /// <summary>
@@ -47,14 +51,14 @@ namespace MVC_Webserver.Servicelayer
             {
                 try
                 {
-                    // Serializing the donor object into JSON format (string)
+                    // Serializing the donor object into JSON format
                     var json = JsonConvert.SerializeObject(donor);
-                    // application/json = the content is json, UTF-8 = the text should be coded as UTF-8
-                    // Creating content for the POST request, with UTF-8 encoding and JSON media type so it can be sent in the body of a HTTP request
-                    var content = new StringContent(json, Encoding.UTF8, "application/json"); // StringContent is used to send text based content as HTTP-content
-                    // StringContent = It's not only a text string - it's a container that tells HttpClient how to send the text over HTTP.
-                    // Sending the POST request asynchronously to the API and waiting for the result (not ascync). Response er af typen HttpResponseMessage
-                    var response = client.PostAsync(apiUrl, content).Result; // PostAsync is async and doesnt block the main thread while it waits on an answer from the server
+
+                    // Creating content for the POST request, with UTF-8 encoding and JSON media type
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    // Sending the POST request asynchronously and waiting for the result
+                    var response = client.PostAsync(apiUrl, content).Result;
 
                     if (response.IsSuccessStatusCode) // Check if the response indicates success
                     {

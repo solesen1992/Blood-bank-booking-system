@@ -11,7 +11,7 @@ namespace MVC_Webserver.Controllers
     /// to perform operations such as creating a donor, editing donor information, and handling responses.
     /// </summary>
     public class DonorController : Controller
-    { //readonly when objects shouldn't change
+    {
         private readonly IDonorBusinessLogic _donorBusinessLogic;
 
 
@@ -90,7 +90,7 @@ namespace MVC_Webserver.Controllers
         /// <returns>The 'Confirmation' view.</returns>
         public ActionResult Confirmation()
         {
-            // Get the DonorId from TempData. It's saved as an object so we need to convert it to an int. If it's empty, it's null
+            // Get the DonorId from TempData
             var donorId = TempData["id"] as int?;
 
             // Preserve TempData for subsequent requests
@@ -101,7 +101,7 @@ namespace MVC_Webserver.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Pass the DonorId to the view using Viewbag. Passes the donorId to the view so it can be for example displayed or used there.
+            // Pass the DonorId to the view using Viewbag
             ViewBag.DonorId = donorId;
 
             // Renders the 'Confirmation' view
@@ -115,7 +115,7 @@ namespace MVC_Webserver.Controllers
         /// Renders the index page of the DonorController.
         /// </summary>
         /// <returns>The 'Index' view.</returns>
-        public ActionResult Index() // ActionResult can return different kinds of things like HTML - it returns it to the client/browser
+        public ActionResult Index()
         {
             // Returns the 'Index' view
             return View();
@@ -125,17 +125,17 @@ namespace MVC_Webserver.Controllers
         /// <summary>
         /// Retrieves and displays the details of a specific donor along with their appointments.
         /// </summary>
-        /// <returns>The 'DonorDetails' view.</returns> 
-        public ActionResult DonorDetails() // ActionResult returns a view that decides what the client sees in the browser
+        /// <returns>The 'DonorDetails' view.</returns>
+        public ActionResult DonorDetails()
         {
-            // Retrieve the donor ID from the cookie. The server reads cookies from Request.Cookies. The value is saved as a string. 
+            // Retrieve the donor ID from the cookie
             var donorIdCookie = Request.Cookies["donorId"];
 
-            // Check if the donor ID cookie is null, empty, or cannot be parsed into an integer. If it can be parsed to an integer, add it to "donorId"
-            if (string.IsNullOrEmpty(donorIdCookie) || !int.TryParse(donorIdCookie, out int donorId)) //output parameter
+            // Check if the donor ID cookie is null, empty, or cannot be parsed into an integer
+            if (string.IsNullOrEmpty(donorIdCookie) || !int.TryParse(donorIdCookie, out int donorId))
             {
                 // If the donor ID is not found in the cookie or is invalid, return an error or redirect
-                return RedirectToAction("Index"); //Index page under Donor
+                return RedirectToAction("Index");
             }
 
             // Retrieve the donor details and appointments from the business logic layer
@@ -149,7 +149,7 @@ namespace MVC_Webserver.Controllers
                 return NotFound();
             }
 
-            // Assign donor and appointments to ViewBag properties. From Controller to view.
+            // Assign donor and appointments to ViewBag properties
             ViewBag.Donor = donor;
             ViewBag.Appointments = appointments;
 

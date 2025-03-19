@@ -7,22 +7,20 @@ namespace DesktopApp.GUI
 {
     /// <summary>
     /// Represents the form for displaying and editing donor details.
-    /// </summary> 
+    /// </summary>
     public partial class DonorDetails : Form
     {
         private readonly IDonorLogic _donorLogic; // Reference to the DonorLogic class for fetching donor information
-        private readonly IConfiguration _configuration;
         private Donor currentDonor;
         private Appointment currentAppointment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DonorDetails"/> class.
         /// </summary>
-        /// <param name="_configuration">The configuration.</param>
-        public DonorDetails(IConfiguration _configuration)
+        public DonorDetails()
         {
             InitializeComponent();
-            _donorLogic = new DonorLogic(_configuration);
+            _donorLogic = new DonorLogic();
             SetEditingMode(false); // Initially disable editing
             // Populate the ComboBox with blood types from the enum
             BloodtypeScroll.DataSource = Enum.GetValues(typeof(BloodTypeEnum));

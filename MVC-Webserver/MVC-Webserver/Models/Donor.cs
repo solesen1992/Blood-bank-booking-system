@@ -25,7 +25,7 @@
         {
             get
             {
-                return CityZipCode != null ? CityZipCode.City : null; //return CityZipCode.City or null
+                return CityZipCode != null ? CityZipCode.City : null;
             }
         }
 
@@ -33,7 +33,7 @@
         {
             get
             {
-                return CityZipCode != null ? CityZipCode.ZipCode : 0; //return CityZipCode.ZipCode or null
+                return CityZipCode != null ? CityZipCode.ZipCode : 0;
             }
         }
 

@@ -9,17 +9,13 @@ namespace DesktopApp.BusinessLogicLayer
     /// </summary>
     public class DonorLogic : IDonorLogic
     {
-        readonly IDonorServiceAccess _dCall;
+        readonly IDonorServiceAccess _donorServiceAccess;
         readonly IAppointmentLogic _appointmentLogic;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DonorLogic"/> class.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        public DonorLogic(IConfiguration configuration)
+        public DonorLogic()
         {
-            _dCall = new DonorServiceAccess(configuration); // Initialize the donor service access using the provided configuration.
-            _appointmentLogic = new AppointmentLogic(configuration); // Directly instantiate AppointmentLogic
+            _donorServiceAccess = new DonorServiceAccess();
+            _appointmentLogic = new AppointmentLogic();
         }
 
         /// <summary>
@@ -28,16 +24,12 @@ namespace DesktopApp.BusinessLogicLayer
         /// <returns>A list of all donors.</returns>
         public async Task<List<Donor>?> GetAllDonors()
         {
-            // Initialize the list of donors to null.
             List<Donor>? foundDonors = null; 
 
-            // Check if the donor service access is initialized.
-            if (_dCall != null) 
+            if (_donorServiceAccess != null) 
             {
-                // If initialized, call the GetDonors method to fetch the list of donors asynchronously.
-                foundDonors = await _dCall.GetDonors(); 
+                foundDonors = await _donorServiceAccess.GetDonors(); 
             }
-            // Return the list of donors or null if no donors were found.
             return foundDonors; 
         }
 
@@ -52,10 +44,10 @@ namespace DesktopApp.BusinessLogicLayer
             List<Donor>? foundDonors = null;
 
             // Check if the donor service access object is not null
-            if (_dCall != null)
+            if (_donorServiceAccess != null)
             {
                 // Fetch all donors from the service
-                foundDonors = await _dCall.GetDonors();
+                foundDonors = await _donorServiceAccess.GetDonors();
 
                 // Check if the fetched donors list is not null
                 if (foundDonors != null)
@@ -66,12 +58,6 @@ namespace DesktopApp.BusinessLogicLayer
                     // Iterate through each donor in the fetched donors list
                     foreach (var donor in foundDonors)
                     {
-
-                        // Checks if 'search' exists in the string, using StringComparison.OrdinalIgnoreCase for a case-insensitive match.
-                        // .Contains() is a method from System.String, and StringComparison is an enum that defines how comparisons are performed.
-                        // - The comparison ignores case differences (e.g., "john" matches "John" or "JOHN").
-                        // - It uses an ordinal (binary) comparison, which is fast and culture-independent.
-                        // The result is 'true' if the 'search' string is found, and 'false' otherwise.
                         if (donor.DonorFirstName.Contains(search, StringComparison.OrdinalIgnoreCase) ||
                             donor.DonorLastName.Contains(search, StringComparison.OrdinalIgnoreCase) ||
                             donor.CprNo.Contains(search, StringComparison.OrdinalIgnoreCase) ||
@@ -96,29 +82,6 @@ namespace DesktopApp.BusinessLogicLayer
         }
 
         /// <summary>
-        /// Fetches all donors from the service and displays them in the specified DataGridView control.
-        /// </summary>
-        /// <param name="dataGridView">The DataGridView control to display the donors.</param>
-        public async Task FetchAndDisplayDonors(DataGridView dataGridView)
-        {
-            // Fetch all donors asynchronously from the service and store them in the 'fetchedDonors' variable
-            List<Donor>? fetchedDonors = await GetAllDonors();
-
-            // Check if the fetched donor list is not null (the data was successfully retrieved)
-            if (fetchedDonors != null)
-            {
-                // Iterate through each donor in the fetched donors list
-                foreach (var donor in fetchedDonors)
-                {
-                    // Log each donor's details (first name, last name, city, and ZIP code) to the console for debugging or tracking purposes
-                    Console.WriteLine($"Donor {donor.DonorFirstName} {donor.DonorLastName}: City={donor.City}, ZipCode={donor.ZipCode}");
-                }
-            }
-            // Set the fetched donors as the data source for the 'dataGridView' control
-            dataGridView.DataSource = fetchedDonors;
-        }
-
-        /// <summary>
         /// Retrieves a donor by their CPR number asynchronously from the service.
         /// </summary>
         /// <param name="cprNo">The CPR number of the donor.</param>
@@ -129,11 +92,11 @@ namespace DesktopApp.BusinessLogicLayer
             Donor? foundDonor = null;
 
             // Check if the donor service access object is not null
-            if (_dCall != null)
+            if (_donorServiceAccess != null)
             {
-                // Fetches the donor by CPR number from the '_dCall' service using the 'GetDonorByCprNo' method
+                // Fetches the donor by CPR number from the '_donorServiceAccess' service using the 'GetDonorByCprNo' method
                 // and assigns the result to 'foundDonor'
-                foundDonor = await _dCall.GetDonorByCprNo(cprNo);
+                foundDonor = await _donorServiceAccess.GetDonorByCprNo(cprNo);
             }
             // Return the found donor, or null if no donor was found
             return foundDonor;
@@ -166,10 +129,10 @@ namespace DesktopApp.BusinessLogicLayer
             }
 
             // Call the service layer to update the donor
-            if (_dCall != null) // Check if the donor service access object is initialized.
+            if (_donorServiceAccess != null) // Check if the donor service access object is initialized.
             {
                 // If initialized, asynchronously call the UpdateDonor method on the service layer with the updated donor information.
-                return await _dCall.UpdateDonor(cprNo, updatedDonor); 
+                return await _donorServiceAccess.UpdateDonor(cprNo, updatedDonor); 
             }
 
             // Return false if the service layer is not initialized

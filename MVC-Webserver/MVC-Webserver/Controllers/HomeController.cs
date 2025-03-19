@@ -8,8 +8,8 @@ namespace MVC_Webserver.Controllers
 {
     public class HomeController : Controller
     {
-        //ILogger<HomeController> logs errors specific for HomeController
-        private readonly ILogger<HomeController> _logger; 
+
+        private readonly ILogger<HomeController> _logger;
 
         // Constructor to inject logger
         public HomeController(ILogger<HomeController> logger)
@@ -20,12 +20,12 @@ namespace MVC_Webserver.Controllers
         // Index action returns an empty view
         public IActionResult Index()
         {
-            return View(); // View - Front page
+            return View(); // Empty view without any data
         }
 
         public IActionResult Privacy()
         {
-            return View(); // Returns a HTML-page with Razor view
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -36,11 +36,11 @@ namespace MVC_Webserver.Controllers
             {
                 // Simulate login success by checking if the provided username and password match the hardcoded values.
                 if (model.Username == "testuser" && model.Password == "password")
-                {   // If the login is correct, the server responds with a cookie with the name cookieId and the value 2.
-                    // If the credentials are correct, set a cookie with a hardcoded donor ID. Append adds the cookie to the HTTP response.
+                {
+                    // If the credentials are correct, set a cookie with a hardcoded donor ID.
                     // This is a placeholder for actual authentication logic, which would typically involve checking a database.
-                    Response.Cookies.Append("donorId", "7"); // Set the donor ID in a cookie. Cookie name and value. Response = servers response on clients request
-                    
+                    Response.Cookies.Append("donorId", "2"); // Set the donor ID in a cookie
+
                     // Store a success message in TempData, which is a temporary storage that lasts until the next request.
                     TempData["LoginMessage"] = "Login successful!";
 

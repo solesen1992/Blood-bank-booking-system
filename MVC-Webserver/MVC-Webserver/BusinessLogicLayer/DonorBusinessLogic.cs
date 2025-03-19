@@ -45,7 +45,7 @@ namespace MVC_Webserver.BusinessLogicLayer
             }
                      
             // Call the CreateDonorThroughApi method of _donorService to attempt to add the donor.
-            // The method returns a donorId.
+            // The method returns a boolean indicating whether the donor was successfully added.
             int result = _donorService.CreateDonorThroughApi(donor);
 
             // If creation fails, return the generic error

@@ -1,6 +1,8 @@
 ﻿using API.Model;
 using System.Data.SqlClient;
 using Dapper;
+using System.Data;
+using System.Reflection.Metadata;
 
 namespace API.DatabaseLayer
 {
@@ -14,12 +16,6 @@ namespace API.DatabaseLayer
     /// </summary>
     public class DonorAccess : IDonorAccess
     {
-        /// <summary>
-        /// Constructor to initialize the DonorAccess class with a configuration object.
-        /// It retrieves the connection string from the configuration file.
-        /// Throws an exception if the connection string is not found.
-        /// </summary>
-        /// <param name="configuration">The configuration object to retrieve the connection string.</param>
         public DonorAccess(IConfiguration configuration)
         {
             //Access the connection string
@@ -92,13 +88,13 @@ namespace API.DatabaseLayer
             List<Donor> donors = new List<Donor>();
 
             // Loop through the SqlDataReader to read each record
-            while (reader.Read()) // One row at a time
+            while (reader.Read())
             {
                 // Create a new Donor object and populate its properties from the SqlDataReader
                 var donor = new Donor
                 {
                     // Retrieve the integer value from the "donorId" column in the data reader
-                    // It returns the value of the donorId as an integer. Each column is accessed by its name via GetOrdinal
+                    // It returns the value of the donorId as an integer
                     DonorId = reader.GetInt32(reader.GetOrdinal("donorId")),
                     CprNo = reader.GetString(reader.GetOrdinal("cprNo")),
                     DonorFirstName = reader.GetString(reader.GetOrdinal("donorFirstName")),
@@ -107,7 +103,7 @@ namespace API.DatabaseLayer
                     DonorEmail = reader.GetString(reader.GetOrdinal("donorEmail")),
                     DonorStreet = reader.GetString(reader.GetOrdinal("donorStreet")),
                     FK_CityZipCodeId = reader.GetInt32(reader.GetOrdinal("FK_cityZipCodeId")),
-                    // Check if FK_BloodTypeId is null and handle accordingly. If the Fk_BloodTypeId is null, make it null. Else read the integer value.
+                    // Check if FK_BloodTypeId is null and handle accordingly
                     FK_BloodTypeId = reader.IsDBNull(reader.GetOrdinal("FK_bloodTypeId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("FK_bloodTypeId")),
                     // Check if FK_BloodTypeId is null and handle accordingly for BloodType enum
                     BloodType = reader.IsDBNull(reader.GetOrdinal("FK_bloodTypeId")) ? (BloodTypeEnum?)null : (BloodTypeEnum)reader.GetInt32(reader.GetOrdinal("FK_bloodTypeId")),
@@ -134,7 +130,7 @@ namespace API.DatabaseLayer
         public Donor GetDonorByCprNo(string cprNo)
         {
             // Initialize a new Donor object
-            Donor donor = new Donor();
+            Donor donor = new Donor(); //this is not used at all, just remove
             // Ensure a valid CPR number is provided
             if (string.IsNullOrEmpty(cprNo))
             {
@@ -157,12 +153,12 @@ namespace API.DatabaseLayer
                     LEFT JOIN CityZipCode ON Donor.FK_cityZipCodeId = CityZipCode.cityZipCodeId
                     WHERE cprNo = @CprNo";
 
-                // Use an anonymous type to hold the result and map CityZipCode separately, Executes the SQL query and maps the result directly into a Donor object using Dapper's QueryFirstOrDefault.
+                // Use an anonymous type to hold the result and map CityZipCode separately
                 var result = connection.QueryFirstOrDefault<Donor>(query, new { CprNo = cprNo });
 
                 if (result != null)
                 {
-                    // Set the BloodType property based on the FK_BloodTypeId value. Maps the FK_BloodTypeId foreign key to the BloodType property, converting it to a nullable enum.
+                    // Set the BloodType property based on the FK_BloodTypeId value
                     result.BloodType = result.FK_BloodTypeId.HasValue ? (BloodTypeEnum?)result.FK_BloodTypeId : null;
 
                     // Create and populate the CityZipCode object
@@ -212,7 +208,7 @@ namespace API.DatabaseLayer
                     WHERE donorId = @DonorId";
 
                 // Use an anonymous type to hold the result and map CityZipCode separately
-                var result = connection.QueryFirstOrDefault<Donor>(query, new { DonorId = donorId });
+                var result = connection.QueryFirstOrDefault<Donor>(query, new { DonorId = donorId }); //Dapper her, QueryFirstOrDefault bruges til at hente data
 
                 if (result != null)
                 {
@@ -276,91 +272,79 @@ namespace API.DatabaseLayer
             return donorsCityZipCodeId;
         }
 
-        /// <summary>
-        /// Inserts a new donor into the database.
-        /// This method first checks for a valid donor object, retrieves or inserts the CityZipCode,
-        /// and then inserts the donor’s information into the Donor table.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object containing the donor's information.</param>
-        /// <returns>True if the donor was successfully inserted; otherwise, false.</returns>
         public bool InsertDonor(Donor donor)
         {
             if (donor == null)
-            {
-                // Throws an exception if the donor parameter is null.
                 throw new ArgumentNullException(nameof(donor), "Donor cannot be null");
-            }
 
-            // Declares a variable to track if the donor was created successfully.
             bool created = false;
 
-            // Uses a 'using' block to open a connection to the database. The connection is automatically closed when done.
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                try
+
+                using (var transaction = connection.BeginTransaction())
                 {
-                    // Retrieve or insert CityZipCode first
-                    // Calls InsertOrGetExistingCityZipCode method to either retrieve or insert the CityZipCode.
-                    int? cityZipCodeId = InsertOrGetExistingCityZipCode(donor);
-
-                    // Defines the SQL query to insert the donor’s details into the Donor table.
-                    string query = @"INSERT INTO Donor (cprNo, donorFirstName, donorLastName, donorPhoneNo, donorEmail, donorStreet, FK_cityZipCodeId)
-                             VALUES (@CprNo, @DonorFirstName, @DonorLastName, @DonorPhoneNo, @DonorEmail, @DonorStreet, @FK_CityZipCodeId)";
-
-                    // Executes the SQL query and pass the donor's properties as parameters to the query.
-                    int rowsAffected = connection.Execute(query, new
+                    try
                     {
-                        donor.CprNo,
-                        donor.DonorFirstName,
-                        donor.DonorLastName,
-                        donor.DonorPhoneNo,
-                        donor.DonorEmail,
-                        donor.DonorStreet,
-                        // Foreign key linking to the CityZipCodeId.
-                        FK_CityZipCodeId = cityZipCodeId
-                    });
+                        // Hent eller indsæt CityZipCode
+                        int? cityZipCodeId = InsertOrGetExistingCityZipCode(donor);
 
-                    // Checks if any rows were affected by the insert. If rowsAffected > 0, the donor was successfully created.
-                    created = rowsAffected > 0;
-                }
-                // Catch any exceptions that occur during the insertion process.
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"InsertDonor Error: {ex.Message}");
+                        // SQL til at indsætte donor
+                        string queryInsertDonor = @"
+                    INSERT INTO Donor 
+                    (CprNo, DonorFirstName, DonorLastName, DonorPhoneNo, DonorEmail, DonorStreet, FK_cityZipCodeId) 
+                    VALUES 
+                    (@CprNo, @DonorFirstName, @DonorLastName, @DonorPhoneNo, @DonorEmail, @DonorStreet, @FK_CityZipCodeId)";
+
+                        // Udfør indsættelsen
+                        int rowsAffected = connection.Execute(queryInsertDonor, new //Dapper's Execute bruges til at udføre en ikke-spørrende
+                                                                                    //operation, såsom en INSERT,
+                        {
+                            donor.CprNo,
+                            donor.DonorFirstName,
+                            donor.DonorLastName,
+                            donor.DonorPhoneNo,
+                            donor.DonorEmail,
+                            donor.DonorStreet,
+                            FK_CityZipCodeId = cityZipCodeId
+                        }, transaction);
+
+                        // Marker som oprettet, hvis indsættelsen lykkedes
+                        created = rowsAffected > 0;
+
+                        // Bekræft transaktionen
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        // Rul tilbage ved fejl
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
             }
-            // Return the value of 'created', which indicates if the donor was successfully inserted.
+
             return created;
         }
 
-        /// <summary>
-        /// Checks if a CPR number exists in the Donor table.
-        /// This method queries the database to determine if the provided CPR number is already associated with an existing donor.
-        /// </summary>
-        /// <param name="cprNo">The CPR number to check.</param>
-        /// <returns>True if the CPR number exists; otherwise, false.</returns>
         public bool DoesCprNoExist(string cprNo)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                // Define the SQL query to check if the CPR number exists. This counts the number of rows in the Donor table where the condition CprNo = @CprNo is true.
+                // Define the SQL query to check if the CPR number exists
                 string query = "SELECT COUNT(1) FROM Donor WHERE CprNo = @CprNo";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    // Add a parameter to prevent SQL injection. @CprNo is added to safely include the cprNo value in the query, preventing SQL injection attacks.
-                    command.Parameters.AddWithValue("@CprNo", cprNo);
+                // Use Dapper to execute the query
+                int count = connection.ExecuteScalar<int>(query, new { CprNo = cprNo }); //Bruger Dapper's ExecuteScalar til at udføre SQL-spørgslen.
+                                                                                         //Parametre bindes automatisk via det anonyme objekt
+                                                                                         //(new { CprNo = cprNo }).
 
-                    // Open the connection
-                    connection.Open();
-
-                    // Execute the query and check the result. ExecuteScalar is used when a query returns a single value (like the count in this case)
-                    int count = (int)command.ExecuteScalar();
-                    return count > 0; // Return true if the CPR number exists
-                }
+                // Return true if the CPR number exists
+                return count > 0;
             }
         }
+
         /// <summary>
         /// Updates the information of an existing donor in the database.
         /// This method modifies the donor's details based on the provided <see cref="Donor"/> object.
@@ -438,59 +422,60 @@ namespace API.DatabaseLayer
             return donor;
         }
 
-        /// <summary>
-        /// Deletes an existing donor from the database.
-        /// This method removes the donor's record based on the provided <see cref="Donor"/> object.
-        /// </summary>
-        /// <param name="donor">The <see cref="Donor"/> object representing the donor to be deleted.</param>
-        /// <returns>True if the donor was successfully deleted; otherwise, false.</returns>
         public bool DeleteDonor(Donor donor)
         {
-            // Declare a variable to track whether the donor was deleted
             bool deleted = false;
 
             // Check if the donor is not null and the CPR number is valid
-            if (donor is not null || donor.CprNo is not null)
+            if (donor is not null && !string.IsNullOrEmpty(donor.CprNo))
             {
-                // Establish a new SQL connection to the database using the connection string
-                using (var Connection = new SqlConnection(ConnectionString))
+                using (var connection = new SqlConnection(ConnectionString))
                 {
-                    try
+                    connection.Open();
+
+                    // Start a transaction
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        // Update foreign keys to prevent integrity issues when deleting the donor
-                        // Define the SQL query to update foreign keys, setting them to NULL before deleting the donor. @ so you can make more lines
-                        string updateForeignKeysQuery = @"
-                            UPDATE Donor
-                            SET FK_cityZipCodeId = NULL, FK_bloodTypeId = NULL
-                            WHERE cprNo = @CprNo"; // parameter placeholder to prevent sql injections
-
-                        // Execute the query to update the foreign keys in the database
-                        Connection.Execute(updateForeignKeysQuery, new { CprNo = donor.CprNo });
-
-                        // Define the SQL query to delete the donor record from the database
-                        string deleteDonorQuery = @"DELETE FROM Donor WHERE cprNo = @CprNo";
-                        // Execute the query to delete the donor from the database. Execute returns the number of rows that was deleted
-                        int rowsAffected = Connection.Execute(deleteDonorQuery, new { CprNo = donor.CprNo }); // DELETE FROM Donor WHERE cprNo = @CprNo
-
-                        // If rows were affected (donor was deleted), set deleted to true
-                        if (rowsAffected > 0)
+                        try
                         {
-                            deleted = rowsAffected > 0;
+                            // Update foreign keys to prevent integrity issues when deleting the donor
+                            string updateForeignKeysQuery = @"
+                        UPDATE Donor
+                        SET FK_cityZipCodeId = NULL, FK_bloodTypeId = NULL
+                        WHERE cprNo = @CprNo";
+
+                            // Execute the query to update the foreign keys in the database
+                            connection.Execute(updateForeignKeysQuery, new { CprNo = donor.CprNo }, transaction); //Dapper
+
+                            // Define the SQL query to delete the donor record from the database
+                            string deleteDonorQuery = @"DELETE FROM Donor WHERE cprNo = @CprNo";
+
+                            // Execute the query to delete the donor from the database
+                            int rowsAffected = connection.Execute(deleteDonorQuery, new { CprNo = donor.CprNo }, transaction); //Dapper
+
+                            // If rows were affected (donor was deleted), set deleted to true
+                            if (rowsAffected > 0)
+                            {
+                                deleted = true;
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Donor deletion failed.");
+                            }
+
+                            // Commit the transaction if both operations were successful
+                            transaction.Commit();
                         }
-                        else
+                        catch (Exception)
                         {
-                            // If no rows were affected, throw an exception indicating the deletion failed
-                            throw new InvalidOperationException("Donor update failed.");
+                            // Rollback the transaction in case of error
+                            transaction.Rollback();
+                            throw;
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        // Catch any exceptions during the execution of the SQL commands and print the error message
-                        Console.WriteLine($"error : {e.Message}");
                     }
                 }
             }
-            // Return whether the donor was successfully deleted
+
             return deleted;
         }
     }

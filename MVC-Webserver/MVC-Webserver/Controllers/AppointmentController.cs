@@ -112,10 +112,10 @@ namespace MVC_Webserver.Controllers
                 Console.WriteLine("Invalid date selected.");
             }
 
-            // Adds model validation error if the date is invalid and returns to the view. Modelstate is often used to check if the data from the user is valid.
+            // Adds model validation error if the date is invalid and returns to the view
             ModelState.AddModelError("Date", "Invalid date selected.");
             // Set the model state errors for display in the view
-            ViewBag.Error = ModelState.ToString(); // Viewbag sends small parts of into from the controller to the view
+            ViewBag.Error = ModelState.ToString();
 
             // Returns the CreateAppointment view if the date is invalid
             return View();
@@ -138,10 +138,10 @@ namespace MVC_Webserver.Controllers
             TempData.Keep();
 
             // Retrieves the selected date from TempData
-            var selectedDate = (DateTime)TempData["SelectedDate"]; // casting to datetime since it's an object
+            var selectedDate = (DateTime)TempData["SelectedDate"];
 
-            // Retrieves donor ID from TempData. Tries to take the data stored in "id". TempData stores data as object, the value is retrieved as an object.
-            var donorId = TempData["id"] as int?; // tries to cast it to an int. If not, it's null.
+            // Retrieves donor ID from TempData
+            var donorId = TempData["id"] as int?;
 
             Console.WriteLine($"CreateAppointmentTime - SelectedDate: {selectedDate}, ");
             // Passes the selected date to the view

@@ -1,6 +1,7 @@
 using DesktopApp.ServiceLayer;
 using System.Windows.Forms;
 using DesktopApp.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using DesktopApp.BusinessLogicLayer;
 using Microsoft.Extensions.Configuration;
@@ -13,12 +14,10 @@ namespace DesktopApp
 {
     /// <summary>
     /// The MainPage class is the main form of the application. It interacts with the business logic layer to fetch and display donor information.
-    /// The class uses dependency injection to receive configuration settings and initializes UI components and event handlers.
     /// </summary>
     public partial class MainPage : Form
     {
-        private readonly IDonorLogic _donorLogic; // Reference to the DonorLogic class for fetching donor information
-        private readonly IConfiguration _configuration;
+        private readonly IDonorLogic _donorLogic;
         private DataGridView dataGridView_DonorAppointments;
         private readonly Donor donor;
 
@@ -26,13 +25,10 @@ namespace DesktopApp
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPage"/> class.
         /// </summary>
-        /// <param name="configuration">The configuration settings.</param>
-        public MainPage(IConfiguration configuration)
+        public MainPage()
         {
-            InitializeComponent(); // Initialize the form components
-
-            _configuration = configuration;
-            _donorLogic = new DonorLogic(configuration);
+            InitializeComponent(); 
+            _donorLogic = new DonorLogic();
 
             this.WindowState = FormWindowState.Maximized;
             this.IsMdiContainer = true;
@@ -44,7 +40,6 @@ namespace DesktopApp
 
             dataGridView_DonorAppointments.AutoGenerateColumns = false;
 
-            // Add the CellFormatting event handler
             dataGridView_DonorAppointments.CellFormatting += dataGridView_DonorAppointments_CellFormatting;
         }
 
@@ -58,9 +53,9 @@ namespace DesktopApp
             if (e.ColumnIndex == dataGridView_DonorAppointments.Columns["StartTime"].Index) // If the column is the Start Time column
             {
                 var cellValue = dataGridView_DonorAppointments.Rows[e.RowIndex].Cells["StartTime"].Value; // Get the cell value
-                if (cellValue != null && cellValue is DateTime startTime) // If the cell value is a DateTime
+                if (cellValue != null && cellValue is DateTime startTime) 
                 {
-                    if (startTime < DateTime.Now) //If the start time is in the past
+                    if (startTime < DateTime.Now)
                     {
                         dataGridView_DonorAppointments.Rows[e.RowIndex].Cells["StartTime"].Style.BackColor = Color.LightGray; // Set the cell background color to light gray
                         dataGridView_DonorAppointments.Rows[e.RowIndex].Cells["EndTime"].Style.BackColor = Color.LightGray; // Set the cell background color to light gray
@@ -77,30 +72,22 @@ namespace DesktopApp
         {
             try
             {
-                List<Appointment>? fetchedAppointments = await _donorLogic.GetUpcomingAndWholeDayAppointments(); 
+                List<Appointment>? fetchedAppointments = await _donorLogic.GetUpcomingAndWholeDayAppointments();
 
-                if (fetchedAppointments == null || !fetchedAppointments.Any()) 
+                if (fetchedAppointments == null || !fetchedAppointments.Any())
                 {
-                    MessageBox.Show("No appointments found.", "Information", 
+                    MessageBox.Show("No appointments found.", "Information",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dataGridView.DataSource = null;
                     return;
                 }
 
-                /* 
-                 .OrderBy(a => a.startTime) is a LINQ (Language Integrated Query) method that sorts the fetchedAppointments list.
-                 OrderBy is a method that sorts the elements of a sequence(in this case, the list of appointments) in ascending
-                 order according to a specified key.
-                 The lambda expression a => a.startTime specifies that the sorting should be done based on the startTime property
-                 of each Appointment object.Here, a represents each Appointment object in the list.
-                 .ToList() converts the sorted sequence (which is an IEnumerable<Appointment>) back into a List<Appointment>.
-                */
                 var sortedAppointments = fetchedAppointments
-                    .OrderBy(a => a.startTime) 
+                    .OrderBy(a => a.startTime)
                     .ToList();
 
-                dataGridView.DataSource = sortedAppointments; 
-                dataGridView.Refresh(); 
+                dataGridView.DataSource = sortedAppointments;
+                dataGridView.Refresh();
             }
             catch (Exception ex)
             {
@@ -116,9 +103,7 @@ namespace DesktopApp
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private async void bloddonorInformationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Set all controls within groupBox1 to invisible
             SetControlsInvisible();
-            // Set dataGridView_DonorInformation to visible
             dataGridView_DonorInformation.Visible = true;
 
             label1.Visible = true;
@@ -144,7 +129,7 @@ namespace DesktopApp
             {
                 foreach (var donor in fetchedDonors)
                 {
-                    Console.WriteLine($"Donor {donor.DonorFirstName} {donor.DonorLastName}: City={donor.City}, ZipCode={donor.ZipCode}"); 
+                    Console.WriteLine($"Donor {donor.DonorFirstName} {donor.DonorLastName}: City={donor.City}, ZipCode={donor.ZipCode}");
                 }
             }
             dataGridView.DataSource = fetchedDonors;
@@ -157,20 +142,15 @@ namespace DesktopApp
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private async void appointmentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Set all controls within groupBox1 to invisible
             SetControlsInvisible();
-            // Set dataGridView_DonorAppointments to visible
             dataGridView_DonorAppointments.Visible = true;
 
             label1.Visible = true;
 
             progressBar1.Visible = true;
 
-            // Set the  textBox2 to visible
             textBox2.Visible = true;
-            // Fetch and display appointments
             await FetchAndDisplayAppointments(dataGridView_DonorAppointments);
-            // Set groupBox1 text to "Donor Tider"
             groupBox1.Text = "Donor Tider";
         }
 
@@ -207,15 +187,13 @@ namespace DesktopApp
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView_DonorInformation.Rows.Count)
             {
                 DataGridViewRow selectedRow = dataGridView_DonorInformation.Rows[e.RowIndex];
-                DonorDetails donorDetails = new DonorDetails(_configuration);
+                DonorDetails donorDetails = new DonorDetails();
 
-                // Get the donor information from the DonorLogic
                 Donor donor = await _donorLogic.GetDonorByCprNo(selectedRow.Cells["Column_CprNo"].Value.ToString());
 
-                // Set the donor information in the DonorDetails form
-                donorDetails.SetDonor(donor);  // Initialize currentDonor in DonorDetails
+                donorDetails.SetDonor(donor);
                 donorDetails.UpdateAppointmentFields();
-                donorDetails.StartPosition = FormStartPosition.CenterScreen; // Set the form's position to the center of the screen
+                donorDetails.StartPosition = FormStartPosition.CenterScreen;
                 donorDetails.Show();
             }
         }

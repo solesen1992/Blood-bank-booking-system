@@ -12,8 +12,8 @@ namespace API.Controllers
     /// The <c>DonorsController</c> class is a Web API controller that manages HTTP requests related to donor operations.
     /// It provides API endpoints for handling donor data, including retrieval, insertion, update, and deletion of donors.
     /// </summary>
-    [Route("api/[controller]")] // Placeholder. Generates a route based on the controllers name
-    [ApiController] // Parameter binding
+    [Route("api/[controller]")]
+    [ApiController]
     public class DonorsController : ControllerBase
     {
         private readonly IDonorLogic _donorLogic;
@@ -47,7 +47,7 @@ namespace API.Controllers
                 var donorDTOs = DonorDTOConvert.ToDonorDTOForDesktopList(donorList);
                 // Return the converted list of DTOs using the Ok() method.
                 // The Ok() method is a helper in the ActionResult class used to return a successful HTTP response with the specified data.
-                return Ok(donorDTOs); // serializes to JSON through Ok
+                return Ok(donorDTOs);
             }
             else
             {
@@ -227,7 +227,7 @@ namespace API.Controllers
                 return NotFound("No donor found with the given CPR number");
             }
             // If the donor is found, return an OK (200) response with the donor details
-            return Ok(donor); // serializes to JSON through Ok
+            return Ok(donor);
         }
     }
 }

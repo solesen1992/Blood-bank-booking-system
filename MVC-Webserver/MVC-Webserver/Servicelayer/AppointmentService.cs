@@ -42,16 +42,16 @@ namespace MVC_Webserver.Servicelayer
             {
                 try
                 {
-                    // Serializing the appointment object into JSON format (en tekst-streng)
+                    // Serializing the appointment object into JSON format
                     var json = JsonConvert.SerializeObject(appointment);
                     Console.WriteLine(json);
-                    // Creating content (body) for the POST request, Encoding.UTF8 bruges til at konvertere JSON-strengen til bytes (og tilbage)
+                    // Creating content for the POST request, with UTF-8 encoding and JSON media type
                     // StringContent = The StringContent constructor accepts the JSON string, specifies the encoding
                     // and set the Content-type header to "application/json". That tells the API that the body of the request is in JSON format.
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     // Sending the POST request asynchronously to the API and waiting for the result from the server
-                    // Sends it to the provided api endpoint with the provided data (content) as a byte stream over HTTPS via the network
+                    // Sends it to the provided api endpoint with the provided data (content)
                     var response = client.PostAsync(apiUrl, content).Result;
 
                     // Check if the response indicates success
@@ -121,11 +121,11 @@ namespace MVC_Webserver.Servicelayer
 
                     // If successful, deserialize the JSON response into a list of appointments
                     if (response.IsSuccessStatusCode)
-                    {   // HttpClient modtager bytes (rå data) fra serverens HTTP-svar.
-                        // ReadAsStringAsync konverterer bytestrømmen til en tekststreng (JSON-format)
-                        var json = response.Content.ReadAsStringAsync().Result; // Responsen fra serveren er bytes (rå data), som skal læses og konverteres til en tekststreng (JSON)
+                    {
+                        // Read the content of the HTTP response. The JSON response content is read as a string
+                        var json = response.Content.ReadAsStringAsync().Result;
                         // Deserialize the JSON string into a list of Appointment objects
-                        var appointments = JsonConvert.DeserializeObject<List<Appointment>>(json); // Deserialisering af JSON kræver, at hele JSON-strengen er tilgængelig som én samlet tekststreng
+                        var appointments = JsonConvert.DeserializeObject<List<Appointment>>(json);
 
                         // Log fetched appointments
                         Console.WriteLine($"Fetched appointments by donor ID: {JsonConvert.SerializeObject(appointments)}");
@@ -159,10 +159,10 @@ namespace MVC_Webserver.Servicelayer
                 try
                 {
                     // Convert the starttime to a string in the desired format
-                    string formattedStartTime = startTime.ToString("yyyy-MM-ddTHH:mm:ss"); // To match server or database?
+                    string formattedStartTime = startTime.ToString("yyyy-MM-ddTHH:mm:ss");
 
                     // Send a DELETE request to delete the appointment by donor ID and starttime
-                    var response = client.DeleteAsync($"{apiUrl}/{donorId}/{formattedStartTime}").Result; // Shouldn't consider the byte stream here because all the content is in the URL and not in the body
+                    var response = client.DeleteAsync($"{apiUrl}/{donorId}/{formattedStartTime}").Result;
 
                     // Return a boolean indicating whether the deletion was successful
                     return response.IsSuccessStatusCode;

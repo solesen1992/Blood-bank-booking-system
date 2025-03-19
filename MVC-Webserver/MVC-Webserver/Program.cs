@@ -15,7 +15,7 @@ builder.Services.AddSingleton<IAppointmentBusinessLogic, AppointmentBusinessLogi
 
 //Register HttpClient for DonoService
 
-var app = builder.Build(); //application gets build
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

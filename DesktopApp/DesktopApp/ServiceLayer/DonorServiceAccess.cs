@@ -17,23 +17,22 @@ namespace DesktopApp.ServiceLayer
     public class DonorServiceAccess : IDonorServiceAccess
     {
         readonly IDbnServiceConnection _dbnService; // The service connection object used to make HTTP requests.
-        readonly string _baseUrl; // The base URL for the donor service.
+       
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DonorServiceAccess"/> class.
         /// </summary>
         /// <param name="configuration">The configuration object to retrieve settings from.</param>
-        public DonorServiceAccess(IConfiguration configuration) 
+        public DonorServiceAccess() 
         {
-            _baseUrl = configuration["DonorService:BaseUrl"]; // Get the base URL from the configuration file.
-            _dbnService = new DbnServiceConnection(_baseUrl); // Initialize the service connection object with the base URL.
+            _dbnService = new DbnServiceConnection(); 
         }
 
         /// <summary>
         /// Retrieves a list of donors from the donor service asynchronously.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a nullable list of <see cref="Donor"/> objects.</returns>
-        public async Task<List<Donor>?> GetDonors() // A nullable list of Donor objects wrapped in a Task for
+        /*public async Task<List<Donor>?> GetDonors() // A nullable list of Donor objects wrapped in a Task for
                                                     // asynchronous execution
         {
             List<Donor>? DonorsFromService = null; // Initialize the list of donors to null.
@@ -72,6 +71,36 @@ namespace DesktopApp.ServiceLayer
             }
             // Return the list of donors, which could be null if the request failed or no data was retrieved
             return DonorsFromService;
+        }*/
+
+        public async Task<List<Donor>?> GetDonors()
+        {
+            try
+            {
+                _dbnService.UseUrl = $"{_dbnService.BaseUrl}/donors";
+                var serviceResponse = await _dbnService.CallServiceGet();
+
+                if (serviceResponse?.IsSuccessStatusCode == true)
+                {
+                    string responseData = await serviceResponse.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<Donor>>(responseData);
+                }
+
+                if (serviceResponse?.StatusCode == HttpStatusCode.NoContent)
+                {
+                    // Hvis statuskoden er "NoContent", returner en tom liste
+                    return new List<Donor>();
+                }
+                else
+                {
+                    // Hvis ikke, returner null
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         /// <summary>

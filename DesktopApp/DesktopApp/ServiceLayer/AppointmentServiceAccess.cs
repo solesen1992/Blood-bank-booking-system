@@ -10,21 +10,19 @@ namespace DesktopApp.ServiceLayer
     /// <summary>
     /// AppointmentServiceAccess provides methods for interacting with the API to manage appointments.
     /// This class acts as a service layer between the desktop application and the API.
-    /// It handles retrieving, deleting, and other operations related to appointments. 
+    /// It handles retrieving, deleting, and other operations related to appointments.
     /// </summary>
     public class AppointmentServiceAccess : IAppointmentServiceAccess
     {
-        readonly IDbnServiceConnection _dbnService;
-        readonly string _baseUrl;
+        readonly IDbnServiceConnection _dbnService; // The service connection object used to make HTTP requests.
 
         /// <summary>
         /// Constructor that initializes the service connection using configuration settings.
         /// </summary>
         /// <param name="configuration">The configuration object to fetch settings from.</param>
-        public AppointmentServiceAccess(IConfiguration configuration)
+        public AppointmentServiceAccess()
         {
-            _baseUrl = configuration["DonorService:BaseUrl"]; // Retrieve the base URL from configuration
-            _dbnService = new DbnServiceConnection(_baseUrl); // Initialize the service connection
+            _dbnService = new DbnServiceConnection();
         }
 
         /// <summary>

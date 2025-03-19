@@ -1,4 +1,9 @@
-﻿namespace DesktopApp.ServiceLayer
+﻿using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace DesktopApp.ServiceLayer
 {
     /// <summary>
     /// The DbnServiceConnection is a wrapper for making HTTP requests using HttpClient. It provides methods for
@@ -7,21 +12,26 @@
     /// </summary>
     public class DbnServiceConnection : IDbnServiceConnection 
     {
-        private readonly HttpClient _httpEnabler; // Is used to send and receive HTTP requests and responses.
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DbnServiceConnection"/> class.
         /// </summary>
         /// <param name="inBaseUrl">The base URL for the service connection.</param>
-        public DbnServiceConnection(string inBaseUrl)
+        public DbnServiceConnection()
         {
-            _httpEnabler = new HttpClient(); 
-            BaseUrl = inBaseUrl; 
-            UseUrl = BaseUrl; // BaseUrl is set to this input URL, and UseUrl is initialized to the same value.
-                              // This allows DBNConnection to use a default base URL, which can later be modified
-                              // if needed.
-        }
+            //_httpClient = new HttpClient();
+            // Load configuration directly in the constructor
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory) // Set base path to the directory where the app runs.
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true); // Load appsettings.json
 
+            var configuration = builder.Build();
+            BaseUrl = configuration["DonorService:BaseUrl"];
+
+            UseUrl = BaseUrl;
+        }
+        //private HttpClient _httpClient { get; init; }
         public string? BaseUrl { get; init; } // Can only be set during object initialization (using init)
 
         public string? UseUrl { get; set; } // Holds the specific URL that will be used for each request.
@@ -37,7 +47,7 @@
             if (UseUrl != null) // If the URL is set, the method sends a GET request to the URL.
             {
                 // Asynchronously sends an HTTP GET request to the URL stored in UseUrl using the HttpClient instance.
-                hrm = await _httpEnabler.GetAsync(UseUrl);
+                hrm = await _httpClient.GetAsync(UseUrl);
             }
             return hrm; // returns an HttpResponseMessage representing the response.
         }
@@ -52,7 +62,7 @@
             HttpResponseMessage? hrm = null;
             if (UseUrl != null) // If UserUrl is set
             {
-                hrm = await _httpEnabler.PostAsync(UseUrl, postJson); // Send a POST request to the URL in UseUrl
+                hrm = await _httpClient.PostAsync(UseUrl, postJson); // Send a POST request to the URL in UseUrl
             }
             return hrm; // returns the response.
         }
@@ -68,7 +78,7 @@
             HttpResponseMessage? hrm = null;
             if (UseUrl != null) // If UseUrl is set
             {
-                hrm = await _httpEnabler.PutAsync(UseUrl, postJson); // Send a PUT request to the URL in UseUrl
+                hrm = await _httpClient.PutAsync(UseUrl, postJson); // Send a PUT request to the URL in UseUrl
             }
             return hrm; // returns the response.
         }
@@ -83,7 +93,7 @@
             HttpResponseMessage? hrm = null;
             if (UseUrl != null)
             {
-                hrm = await _httpEnabler.DeleteAsync(UseUrl); // Send a DELETE request to the URL in UseUrl
+                hrm = await _httpClient.DeleteAsync(UseUrl); // Send a DELETE request to the URL in UseUrl
             }
             return hrm; // returns the response.
         }

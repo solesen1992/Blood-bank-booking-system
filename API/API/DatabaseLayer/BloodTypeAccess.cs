@@ -1,7 +1,7 @@
 ﻿using API.Model;
 using System.Data.SqlClient;
 using Dapper;
-/*SHOULD HAVE BEEN DELETED*/
+
 
 namespace API.DatabaseLayer
 {
