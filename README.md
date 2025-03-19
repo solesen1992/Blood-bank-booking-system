@@ -6,7 +6,7 @@ The project uses concurrency, ACID principles etc. It's made in C# and MS SQL.
 
 This project is made on the 3rd semester of my education in computer science as a part of a group project in the fall of 2024.
 
-If I were to make changes to the project, I would for example do the following:
+<u>If I were to make changes to the project, I would for example do the following:</u>
 - Change how we handle HTTP requests to prevent socket exhaustion.
 - Consider whether we should make everything asynchronous instead of synchronous, as the desktop app is currently the only asynchronous component.
 - Implement the rest of the DTO's in the API
